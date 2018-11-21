@@ -1,14 +1,14 @@
 import ValidationError from './ValidationError';
 
-const createError = ({ value, code, options, error }) =>
+const createError = ({ value, code, config, error }) =>
   new ValidationError({
     value,
     code,
-    options,
+    config,
     error,
   });
 
-export default (...args) => (...options) => value => {
+export default (...args) => (...config) => value => {
   let code;
   let validator;
 
@@ -20,16 +20,16 @@ export default (...args) => (...options) => value => {
   }
 
   try {
-    const isValid = validator(value, ...options);
+    const isValid = validator(value, ...config);
 
     if (!isValid) {
-      throw createError({ value, code, options });
+      throw createError({ value, code, config });
     }
 
     return value;
   } catch (error) {
     if (!(error instanceof ValidationError)) {
-      throw createError({ value, code, options, error });
+      throw createError({ value, code, config, error });
     }
 
     throw error;
