@@ -1,4 +1,12 @@
-import createError from './createError';
+import ValidationError from './ValidationError';
+
+const createError = ({ value, code, options, error }) =>
+  new ValidationError({
+    value,
+    code,
+    options,
+    error,
+  });
 
 export default (...args) => (...options) => value => {
   let code;
@@ -20,6 +28,10 @@ export default (...args) => (...options) => value => {
 
     return value;
   } catch (error) {
-    throw createError({ value, code, options, error });
+    if (!(error instanceof ValidationError)) {
+      throw createError({ value, code, options, error });
+    }
+
+    throw error;
   }
 };
