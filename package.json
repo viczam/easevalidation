@@ -1,0 +1,61 @@
+{
+  "name": "easevalidation",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "author": "Victor Zamfir <zamfir.victor@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/viczam/easevalidation"
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "babel src --copy-files --delete-dir-on-start --out-dir dist",
+    "watch": "babel src --watch --out-dir dist --copy-files --delete-dir-on-start",
+    "test": "jest --watch --notify",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "lodash": "4.17.11",
+    "validator": "10.9.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "7.1.6",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "7.1.6",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "10.0.1",
+    "babel-jest": "23.6.0",
+    "eslint": "5.9.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-config-prettier": "3.3.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jest": "22.0.0",
+    "eslint-plugin-jsx-a11y": "6.1.2",
+    "eslint-plugin-prettier": "3.0.0",
+    "eslint-plugin-react": "7.11.1",
+    "husky": "1.1.4",
+    "jest": "23.6.0",
+    "lint-staged": "8.0.5",
+    "prettier": "1.15.2"
+  },
+  "renovate": {
+    "extends": [
+      "config:js-lib"
+    ],
+    "automerge": true,
+    "major": {
+      "automerge": false
+    },
+    "automergeType": "branch"
+  },
+  "files": [
+    "dist"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
