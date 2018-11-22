@@ -1,4 +1,4 @@
-import { test, validators, createValidator } from '../src';
+import { test, validate, validators, createValidator, fromJSON } from '../src';
 
 const {
   isNumber,
@@ -22,6 +22,11 @@ const isEven = createValidator('isEven', value => !test(isOdd())(value));
 describe('validators', () => {
   it('should throw error', () => {
     expect(() => isOdd()(2)).toThrow(/isOdd/);
+  });
+
+  it('should return error', () => {
+    expect(validate(isOdd())(2)).toBeInstanceOf(Error);
+    expect(validate(isOdd())(2).message).toMatch(/isOdd/);
   });
 
   it('should validate number', () => {
@@ -99,6 +104,39 @@ describe('validators', () => {
           },
         },
         password: 'test',
+      }),
+    ).toBeTruthy();
+  });
+
+  it('fromJSON', () => {
+    expect(
+      test(
+        fromJSON({
+          code: 'isObject',
+          config: {
+            firstName: {
+              code: 'schema',
+              config: [
+                {
+                  code: 'isString',
+                },
+                {
+                  code: 'isMinLength',
+                  config: 3,
+                },
+              ],
+            },
+            age: {
+              code: 'schema',
+              config: {
+                code: 'isRequired',
+              },
+            },
+          },
+        }),
+      )({
+        firstName: 'Victor',
+        age: 32,
       }),
     ).toBeTruthy();
   });

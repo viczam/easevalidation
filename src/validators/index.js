@@ -51,6 +51,7 @@ import isRegexMatch from './isRegexMatch';
 import isRequired from './isRequired';
 import isValid from './isValid';
 import isValidNumber from './isValidNumber';
+import isCloseTo from './isCloseTo';
 import createValidators from '../createValidators';
 
 export default createValidators({
@@ -106,5 +107,6 @@ export default createValidators({
   isRequired,
   isValid,
   isValidNumber,
+  isCloseTo,
   ...validators,
 });
