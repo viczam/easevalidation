@@ -8,7 +8,7 @@ const createError = ({ value, code, config, error }) =>
     error,
   });
 
-export default (...args) => (...config) => value => {
+export default (...args) => {
   let code;
   let validator;
 
@@ -19,19 +19,32 @@ export default (...args) => (...config) => value => {
     [code, validator] = args;
   }
 
-  try {
-    const isValid = validator(value, ...config);
+  return (...config) => {
+    const validate = value => {
+      try {
+        const isValid = validator(value, ...config);
 
-    if (!isValid) {
-      throw createError({ value, code, config });
-    }
+        if (!isValid) {
+          throw createError({ value, code, config });
+        }
 
-    return value;
-  } catch (error) {
-    if (!(error instanceof ValidationError)) {
-      throw createError({ value, code, config, error });
-    }
+        return value;
+      } catch (error) {
+        if (!(error instanceof ValidationError)) {
+          throw createError({ value, code, config, error });
+        }
 
-    throw error;
-  }
+        throw error;
+      }
+    };
+
+    Object.assign(validate, {
+      __validation__: {
+        code,
+        config,
+      },
+    });
+
+    return validate;
+  };
 };
