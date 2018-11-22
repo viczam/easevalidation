@@ -11,7 +11,9 @@ export default (value, schema) => {
   const errors = Object.keys(schema).reduce((acc, propr) => {
     const validator = schema[propr];
     try {
-      if (Array.isArray(validator)) {
+      if (typeof validator.toValidator === 'function') {
+        validator.toValidator()(value[propr]);
+      } else if (Array.isArray(validator)) {
         everyValidator(...validator)(value[propr]);
       } else {
         validator(value[propr]);
