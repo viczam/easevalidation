@@ -1,5 +1,6 @@
 import pick from 'lodash/pick';
 import isArguments from 'lodash/isArguments';
+import isValidObject from 'lodash/isObject';
 import isArrayBuffer from 'lodash/isArrayBuffer';
 import isArrayLike from 'lodash/isArrayLike';
 import isArrayLikeObject from 'lodash/isArrayLikeObject';
@@ -137,6 +138,7 @@ const validators = {
     isValid,
     isValidNumber,
     isCloseTo,
+    isValidObject,
     ...validatorsJs,
   }),
 };
@@ -187,55 +189,87 @@ validators.string = createChainedValidator(
       'isWhitelisted',
     ]),
     isMatch: validators.matches,
+    isEqual: validators.isEqual,
+    isEqualWith: validators.isEqualWith,
   },
   [validators.isString],
 );
 
 validators.number = createChainedValidator(
   'number',
-  pick(validators, [
-    'isFinite',
-    'isInteger',
-    'isSafeInteger',
-    'isExclusiveMaximum',
-    'isExclusiveMinimum',
-    'isMaximum',
-    'isMinimum',
-    'isCloseTo',
-  ]),
+  {
+    ...pick(validators, [
+      'isFinite',
+      'isInteger',
+      'isSafeInteger',
+      'isExclusiveMaximum',
+      'isExclusiveMinimum',
+      'isMaximum',
+      'isMinimum',
+      'isCloseTo',
+    ]),
+    isEqual: validators.isEqual,
+    isEqualWith: validators.isEqualWith,
+  },
   [validators.isNumber],
 );
 
 validators.date = createChainedValidator(
   'date',
-  createValidators({
-    isAfter: dateIsAfter,
-    isBefore: dateIsBefore,
-    isEqual: dateIsEqual,
-    isFirstDayOfMonth: dateIsFirstDayOfMonth,
-    isFriday: dateIsFriday,
-    isLastDayOfMonth: dateIsLastDayOfMonth,
-    isLeapYear: dateIsLeapYear,
-    isMonday: dateIsMonday,
-    isSameDay: dateIsSameDay,
-    isSameHour: dateIsSameHour,
-    isSameISOWeek: dateIsSameISOWeek,
-    isSameISOYear: dateIsSameISOYear,
-    isSameMinute: dateIsSameMinute,
-    isSameMonth: dateIsSameMonth,
-    isSameQuarter: dateIsSameQuarter,
-    isSameSecond: dateIsSameSecond,
-    isSameWeek: dateIsSameWeek,
-    isSameYear: dateIsSameYear,
-    isSaturday: dateIsSaturday,
-    isSunday: dateIsSunday,
-    isThursday: dateIsThursday,
-    isTuesday: dateIsTuesday,
-    isValid: dateIsValid,
-    isWednesday: dateIsWednesday,
-    isWeekend: dateIsWeekend,
-    isWithinRange: dateIsWithinRange,
-  }),
+  {
+    ...createValidators({
+      isAfter: dateIsAfter,
+      isBefore: dateIsBefore,
+      isEqual: dateIsEqual,
+      isFirstDayOfMonth: dateIsFirstDayOfMonth,
+      isFriday: dateIsFriday,
+      isLastDayOfMonth: dateIsLastDayOfMonth,
+      isLeapYear: dateIsLeapYear,
+      isMonday: dateIsMonday,
+      isSameDay: dateIsSameDay,
+      isSameHour: dateIsSameHour,
+      isSameISOWeek: dateIsSameISOWeek,
+      isSameISOYear: dateIsSameISOYear,
+      isSameMinute: dateIsSameMinute,
+      isSameMonth: dateIsSameMonth,
+      isSameQuarter: dateIsSameQuarter,
+      isSameSecond: dateIsSameSecond,
+      isSameWeek: dateIsSameWeek,
+      isSameYear: dateIsSameYear,
+      isSaturday: dateIsSaturday,
+      isSunday: dateIsSunday,
+      isThursday: dateIsThursday,
+      isTuesday: dateIsTuesday,
+      isWednesday: dateIsWednesday,
+      isWeekend: dateIsWeekend,
+      isWithinRange: dateIsWithinRange,
+      isValid: dateIsValid,
+    }),
+    isEqual: validators.isEqual,
+    isEqualWith: validators.isEqualWith,
+  },
+  [validators.isDate],
+);
+
+validators.array = createChainedValidator(
+  'array',
+  {
+    ...pick(validators, ['isMaxLength', 'isMinLength', 'isLength']),
+    isValid: validators.isArray,
+    isEqual: validators.isEqual,
+    isEqualWith: validators.isEqualWith,
+  },
+  [validators.isArray],
+);
+
+validators.object = createChainedValidator(
+  'object',
+  {
+    isObject: validators.isObject,
+    isEqual: validators.isEqual,
+    isEqualWith: validators.isEqualWith,
+  },
+  [validators.isValidObject],
 );
 
 export default validators;
