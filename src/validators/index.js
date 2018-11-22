@@ -144,7 +144,6 @@ const validators = {
 };
 
 validators.string = createChainedValidator(
-  'string',
   {
     ...pick(validators, [
       'isLength',
@@ -196,7 +195,6 @@ validators.string = createChainedValidator(
 );
 
 validators.number = createChainedValidator(
-  'number',
   {
     ...pick(validators, [
       'isFinite',
@@ -215,7 +213,6 @@ validators.number = createChainedValidator(
 );
 
 validators.date = createChainedValidator(
-  'date',
   {
     ...createValidators({
       isAfter: dateIsAfter,
@@ -252,7 +249,6 @@ validators.date = createChainedValidator(
 );
 
 validators.array = createChainedValidator(
-  'array',
   {
     ...pick(validators, ['isMaxLength', 'isMinLength', 'isLength']),
     isValid: validators.isArray,
@@ -263,9 +259,8 @@ validators.array = createChainedValidator(
 );
 
 validators.object = createChainedValidator(
-  'object',
   {
-    isObject: validators.isObject,
+    isSchema: validators.isObject,
     isEqual: validators.isEqual,
     isEqualWith: validators.isEqualWith,
   },

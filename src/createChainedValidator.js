@@ -2,23 +2,36 @@ import flatten from 'lodash/flatten';
 import { test, validate, validators as v } from './index';
 import createValidator from './createValidator';
 
-const createChainedValidator = (code, validatorsMap, initialValidators = []) => {
-  const validators = initialValidators;
-  const map = Object.keys(validatorsMap).reduce(
-    (acc, key) => ({
-      ...acc,
-      [key]: (...args) => {
-        validators.push(validatorsMap[key](...args));
-        return map;
-      },
-    }),
-    {},
-  );
+const createChainedValidator = (validatorsMap, initialValidators = []) => {
+  const map = {
+    toValidator: code => createValidator(code, v.every(map.validators))(),
+    test: value => test(map.validators)(value),
+    validate: value => validate(map.validators)(value),
+    extend: mapOfValidators => {
+      Object.assign(
+        map,
+        Object.keys(mapOfValidators).reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: (...args) => {
+              map.validators.push(mapOfValidators[key](...args));
+              return map;
+            },
+          }),
+          {},
+        ),
+      );
 
-  map.toValidator = () => createValidator(code, v.every(validators))();
-  map.test = value => test(validators)(value);
-  map.validate = value => validate(validators)(value);
-  map.extend = (...args) => validators.push(...flatten(args));
+      return map;
+    },
+    addValidators: (...args) => {
+      map.validators.push(...flatten(args));
+      return map;
+    },
+    validators: initialValidators,
+  };
+
+  map.extend(validatorsMap);
 
   return map;
 };
