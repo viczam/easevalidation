@@ -244,8 +244,6 @@ validators.date = () =>
         isWithinRange: dateIsWithinRange,
         isValid: dateIsValid,
       }),
-      isEqual: validators.isEqual,
-      isEqualWith: validators.isEqualWith,
       isValid: validators.isValid,
       isOneOf: validators.isOneOf,
     },

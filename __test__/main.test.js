@@ -39,7 +39,7 @@ describe('validators', () => {
     expect(
       test(
         v.isObject({
-          firstName: v.string().isMinLength(3),
+          firstName: [v.isString(), v.isMinLength(3)],
           lastName: [v.isString(), v.isMinLength(3)],
           age: [v.isNumber(), v.isMin(20), v.isMax(22)],
           location: v.isObject({
@@ -89,6 +89,46 @@ describe('validators', () => {
           ),
         ),
         v.isProperty('password', v.isString(), v.isEqual('test')),
+      )({
+        firstName: 'victor',
+        lastName: 'zamfir',
+        age: 21,
+        location: {
+          address: 'this is my address',
+          lat: 10,
+          lng: 100,
+          something: {
+            bleah: 'fsafa',
+          },
+        },
+        password: 'test',
+      }),
+    ).toBeTruthy();
+  });
+
+  it('should validate object by schema built with chained validators', () => {
+    expect(
+      test(
+        v.object().isSchema({
+          firstName: v.string().isMinLength(3),
+          lastName: v.string().isMinLength(3),
+          age: v
+            .number()
+            .isMin(20)
+            .isMax(22),
+          location: v.object().isSchema({
+            address: v.string().isMinLength(5),
+            lat: v.number().isMin(0),
+            lng: v.number().isMin(0),
+            something: v.object().isSchema({
+              bleah: v
+                .string()
+                .isRequired()
+                .isAlpha(),
+            }),
+          }),
+          password: v.string().isEqual('test'),
+        }),
       )({
         firstName: 'victor',
         lastName: 'zamfir',
