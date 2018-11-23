@@ -3,9 +3,9 @@ import { test, validate, validators as v } from './index';
 import createValidator from './createValidator';
 
 class ValidatorStack {
-  constructor(validatorsMap = {}, initialValidators = []) {
+  constructor(knownValidators = {}, initialValidators = []) {
     this.stack = initialValidators;
-    this.extend(validatorsMap);
+    this.extend(knownValidators);
   }
 
   toValidator = code => createValidator(code, v.every(this.stack))();
@@ -14,14 +14,14 @@ class ValidatorStack {
 
   validate = value => validate(this.stack)(value);
 
-  extend = validatorsMap => {
+  extend = knownValidators => {
     Object.assign(
       this,
-      Object.keys(validatorsMap).reduce(
+      Object.keys(knownValidators).reduce(
         (acc, key) => ({
           ...acc,
           [key]: (...args) => {
-            this.stack.push(validatorsMap[key](...args));
+            this.stack.push(knownValidators[key](...args));
             return this;
           },
         }),

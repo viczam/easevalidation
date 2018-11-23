@@ -1,7 +1,7 @@
-import flatten from 'lodash/flatten';
+import { argsToValidators } from './helpers';
 
-export default (...validators) => value =>
-  flatten(validators).reduce((isValid, validator) => {
+export default (...args) => value =>
+  argsToValidators(args).reduce((isValid, validator) => {
     if (!isValid) {
       return isValid;
     }

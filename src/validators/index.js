@@ -75,6 +75,7 @@ import isMinimum from './isMinimum';
 import isMinLength from './isMinLength';
 import isOneOf from './isOneOf';
 import isProperty from './isProperty';
+import isPropertyEqual from './isPropertyEqual';
 import isRegexMatch from './isRegexMatch';
 import isRequired from './isRequired';
 import isValid from './isValid';
@@ -133,6 +134,7 @@ const validators = {
     isMinLength,
     isOneOf,
     isProperty,
+    isPropertyEqual,
     isRegexMatch,
     isRequired,
     isValid,
@@ -191,6 +193,7 @@ validators.string = () =>
       isMatch: validators.matches,
       isEqual: validators.isEqual,
       isEqualWith: validators.isEqualWith,
+      isRequired: validators.isRequired,
     },
     [validators.isString],
   );
@@ -258,6 +261,7 @@ validators.array = () =>
       isValid: validators.isArray,
       isEqual: validators.isEqual,
       isEqualWith: validators.isEqualWith,
+      isEmpty: validators.isEmpty,
     },
     [validators.isArray],
   );
@@ -266,8 +270,11 @@ validators.object = () =>
   new ValidatorStack(
     {
       isSchema: validators.isObject,
+      isProperty: validators.isProperty,
       isEqual: validators.isEqual,
       isEqualWith: validators.isEqualWith,
+      isEmpty: validators.isEmpty,
+      isPropertyEqual: validators.isPropertyEqual,
     },
     [validators.isValidObject],
   );
