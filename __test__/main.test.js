@@ -1,20 +1,4 @@
-import { test, validate, validators, createValidator, fromJSON } from '../src';
-
-const {
-  isNumber,
-  isMinimum,
-  isFinite,
-  isMaximum,
-  isEmail,
-  isAlpha,
-  isObject,
-  isString,
-  isMinLength,
-  isRequired,
-  isEqual,
-  isPlainObject,
-  isProperty,
-} = validators;
+import { test, validate, validators as v, createValidator } from '../src';
 
 const isOdd = createValidator('isOdd', value => value % 2);
 const isEven = createValidator('isEven', value => !test(isOdd())(value));
@@ -30,43 +14,43 @@ describe('validators', () => {
   });
 
   it('should validate number', () => {
-    expect(test(isNumber(), isMinimum(3), isMaximum(5), isEven(), isFinite())(4)).toBeTruthy();
+    expect(test(v.isNumber(), v.isMin(3), v.isMax(5), isEven(), v.isFinite())(4)).toBeTruthy();
   });
 
   it('should validate number using a chained validator', () => {
     expect(
-      validators
+      v
         .number()
         .extend({
           isEven,
         })
-        .isMinimum(3)
-        .isMaximum(5)
+        .isMin(3)
+        .isMax(5)
         .isEven()
         .isFinite(),
     ).toBeTruthy();
   });
 
   it('validate emails', () => {
-    expect(test(isEmail())('zamfir.victor@gmail.com')).toBeTruthy();
+    expect(test(v.isEmail())('zamfir.victor@gmail.com')).toBeTruthy();
   });
 
   it('should validate object by schema', () => {
     expect(
       test(
-        isObject({
-          firstName: validators.string().isMinLength(3),
-          lastName: [isString(), isMinLength(3)],
-          age: [isNumber(), isMinimum(20), isMaximum(22)],
-          location: isObject({
-            address: [isString(), isMinLength(5)],
-            lat: [isRequired(), isNumber()],
-            lng: [isRequired(), isNumber()],
-            something: isObject({
-              bleah: [isRequired(), isString(), isAlpha()],
+        v.isObject({
+          firstName: v.string().isMinLength(3),
+          lastName: [v.isString(), v.isMinLength(3)],
+          age: [v.isNumber(), v.isMin(20), v.isMax(22)],
+          location: v.isObject({
+            address: [v.isString(), v.isMinLength(5)],
+            lat: [v.isRequired(), v.isNumber()],
+            lng: [v.isRequired(), v.isNumber()],
+            something: v.isObject({
+              bleah: [v.isRequired(), v.isString(), v.isAlpha()],
             }),
           }),
-          password: [isString(), isEqual('test')],
+          password: [v.isString(), v.isEqual('test')],
         }),
       )({
         firstName: 'victor',
@@ -88,23 +72,23 @@ describe('validators', () => {
   it('should validate object by another type of schema', () => {
     expect(
       test(
-        isPlainObject(),
-        isProperty('firstName', isString(), isMinLength(3)),
-        isProperty('lastName', isString(), isMinLength(3)),
-        isProperty('age', isNumber(), isMinimum(20), isMaximum(22)),
-        isProperty(
+        v.isPlainObject(),
+        v.isProperty('firstName', v.isString(), v.isMinLength(3)),
+        v.isProperty('lastName', v.isString(), v.isMinLength(3)),
+        v.isProperty('age', v.isNumber(), v.isMin(20), v.isMax(22)),
+        v.isProperty(
           'location',
-          isPlainObject(),
-          isProperty('address', isString(), isMinLength(5)),
-          isProperty('lat', isRequired(), isNumber()),
-          isProperty('lng', isRequired(), isNumber()),
-          isProperty(
+          v.isPlainObject(),
+          v.isProperty('address', v.isString(), v.isMinLength(5)),
+          v.isProperty('lat', v.isRequired(), v.isNumber()),
+          v.isProperty('lng', v.isRequired(), v.isNumber()),
+          v.isProperty(
             'something',
-            isPlainObject(),
-            isProperty('bleah', isRequired(), isString(), isAlpha()),
+            v.isPlainObject(),
+            v.isProperty('bleah', v.isRequired(), v.isString(), v.isAlpha()),
           ),
         ),
-        isProperty('password', isString(), isEqual('test')),
+        v.isProperty('password', v.isString(), v.isEqual('test')),
       )({
         firstName: 'victor',
         lastName: 'zamfir',
@@ -118,39 +102,6 @@ describe('validators', () => {
           },
         },
         password: 'test',
-      }),
-    ).toBeTruthy();
-  });
-
-  it('fromJSON', () => {
-    expect(
-      test(
-        fromJSON({
-          code: 'isObject',
-          config: {
-            firstName: {
-              code: 'schema',
-              config: [
-                {
-                  code: 'isString',
-                },
-                {
-                  code: 'isMinLength',
-                  config: 3,
-                },
-              ],
-            },
-            age: {
-              code: 'schema',
-              config: {
-                code: 'isRequired',
-              },
-            },
-          },
-        }),
-      )({
-        firstName: 'Victor',
-        age: 32,
       }),
     ).toBeTruthy();
   });

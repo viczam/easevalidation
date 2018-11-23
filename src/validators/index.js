@@ -66,12 +66,10 @@ import any from './any';
 import every from './every';
 import isObject from './isObject';
 import isArray from './isArray';
-import isExclusiveMaximum from './isExclusiveMaximum';
-import isExclusiveMinimum from './isExclusiveMinimum';
 import isIntanceOf from './isIntanceOf';
-import isMaximum from './isMaximum';
+import isMax from './isMax';
 import isMaxLength from './isMaxLength';
-import isMinimum from './isMinimum';
+import isMin from './isMin';
 import isMinLength from './isMinLength';
 import isOneOf from './isOneOf';
 import isProperty from './isProperty';
@@ -124,12 +122,10 @@ const validators = {
     any,
     every,
     isArray,
-    isExclusiveMaximum,
-    isExclusiveMinimum,
     isIntanceOf,
-    isMaximum,
+    isMax,
     isMaxLength,
-    isMinimum,
+    isMin,
     isMinLength,
     isOneOf,
     isProperty,
@@ -204,10 +200,8 @@ validators.number = () =>
         'isFinite',
         'isInteger',
         'isSafeInteger',
-        'isExclusiveMaximum',
-        'isExclusiveMinimum',
-        'isMaximum',
-        'isMinimum',
+        'isMax',
+        'isMin',
         'isCloseTo',
       ]),
       isEqual: validators.isEqual,
