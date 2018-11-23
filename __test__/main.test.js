@@ -33,6 +33,20 @@ describe('validators', () => {
     expect(test(isNumber(), isMinimum(3), isMaximum(5), isEven(), isFinite())(4)).toBeTruthy();
   });
 
+  it('should validate number using a chained validator', () => {
+    expect(
+      validators
+        .number()
+        .extend({
+          isEven,
+        })
+        .isMinimum(3)
+        .isMaximum(5)
+        .isEven()
+        .isFinite(),
+    ).toBeTruthy();
+  });
+
   it('validate emails', () => {
     expect(test(isEmail())('zamfir.victor@gmail.com')).toBeTruthy();
   });

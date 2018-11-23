@@ -10,6 +10,7 @@ export default (value, schema) => {
 
   const errors = Object.keys(schema).reduce((acc, propr) => {
     const validator = schema[propr];
+
     try {
       if (typeof validator.toValidator === 'function') {
         validator.toValidator()(value[propr]);
@@ -18,13 +19,13 @@ export default (value, schema) => {
       } else {
         validator(value[propr]);
       }
-      return acc;
     } catch (err) {
-      return {
-        ...acc,
+      Object.assign(acc, {
         [propr]: err,
-      };
+      });
     }
+
+    return acc;
   }, {});
 
   if (!Object.keys(errors).length) {
