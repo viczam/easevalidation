@@ -14,16 +14,13 @@ const walkError = error => {
   }
 
   if (error.code === 'isObject' && error.error) {
-    return Object.keys(error.error).reduce((acc, key) => {
-      if (!error.error[key]) {
-        return acc;
-      }
-
-      return {
+    return Object.keys(error.error).reduce(
+      (acc, key) => ({
         ...acc,
         [key]: walkError(error.error[key]),
-      };
-    }, {});
+      }),
+      {},
+    );
   }
 
   if (error.code === 'every') {

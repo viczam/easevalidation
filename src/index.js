@@ -17,5 +17,3 @@ export {
   walkError,
   validators,
 };
-
-export * from './serialize';

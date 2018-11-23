@@ -76,7 +76,6 @@ import isMinLength from './isMinLength';
 import isOneOf from './isOneOf';
 import isProperty from './isProperty';
 import isPropertyEqual from './isPropertyEqual';
-import isRegexMatch from './isRegexMatch';
 import isRequired from './isRequired';
 import isValid from './isValid';
 import isValidNumber from './isValidNumber';
@@ -135,7 +134,6 @@ const validators = {
     isOneOf,
     isProperty,
     isPropertyEqual,
-    isRegexMatch,
     isRequired,
     isValid,
     isValidNumber,
@@ -152,7 +150,6 @@ validators.string = () =>
         'isLength',
         'isMinLength',
         'isMaxLength',
-        'isRegexMatch',
         'isAlpha',
         'isAlphanumeric',
         'isAscii',
