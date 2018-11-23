@@ -189,6 +189,7 @@ validators.string = () =>
       isRequired: validators.isRequired,
       isValid: validators.isValid,
       isOneOf: validators.isOneOf,
+      isValidNumber: validators.isValidNumber,
     },
     [validators.isString],
   );
