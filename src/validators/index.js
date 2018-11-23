@@ -194,6 +194,8 @@ validators.string = () =>
       isEqual: validators.isEqual,
       isEqualWith: validators.isEqualWith,
       isRequired: validators.isRequired,
+      isValid: validators.isValid,
+      isOneOf: validators.isOneOf,
     },
     [validators.isString],
   );
@@ -213,6 +215,8 @@ validators.number = () =>
       ]),
       isEqual: validators.isEqual,
       isEqualWith: validators.isEqualWith,
+      isValid: validators.isValid,
+      isOneOf: validators.isOneOf,
     },
     [validators.isNumber],
   );
@@ -250,6 +254,8 @@ validators.date = () =>
       }),
       isEqual: validators.isEqual,
       isEqualWith: validators.isEqualWith,
+      isValid: validators.isValid,
+      isOneOf: validators.isOneOf,
     },
     [validators.isDate],
   );
@@ -258,7 +264,8 @@ validators.array = () =>
   new ValidatorStack(
     {
       ...pick(validators, ['isMaxLength', 'isMinLength', 'isLength']),
-      isValid: validators.isArray,
+      isValidElement: validators.isArray,
+      isValid: validators.isValid,
       isEqual: validators.isEqual,
       isEqualWith: validators.isEqualWith,
       isEmpty: validators.isEmpty,
@@ -275,6 +282,8 @@ validators.object = () =>
       isEqualWith: validators.isEqualWith,
       isEmpty: validators.isEmpty,
       isPropertyEqual: validators.isPropertyEqual,
+      isValid: validators.isValid,
+      isOneOf: validators.isOneOf,
     },
     [validators.isValidObject],
   );

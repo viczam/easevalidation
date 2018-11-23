@@ -1,5 +1,5 @@
 import flatten from 'lodash/flatten';
-import isValid from './isValid';
+import test from '../test';
 
 export default (value, ...validators) =>
-  flatten(validators).every(validator => isValid(value, validator));
+  flatten(validators).every(validator => test(validator)(value));
