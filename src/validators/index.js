@@ -81,7 +81,7 @@ import isValid from './isValid';
 import isValidNumber from './isValidNumber';
 import isCloseTo from './isCloseTo';
 import createValidators from '../createValidators';
-import createChainedValidator from '../createChainedValidator';
+import ValidatorStack from '../ValidatorStack';
 
 const validators = {
   ...createValidators({
@@ -143,128 +143,133 @@ const validators = {
   }),
 };
 
-validators.string = createChainedValidator(
-  {
-    ...pick(validators, [
-      'isLength',
-      'isMinLength',
-      'isMaxLength',
-      'isRegexMatch',
-      'isAlpha',
-      'isAlphanumeric',
-      'isAscii',
-      'isBase64',
-      'isCreditCard',
-      'isCurrency',
-      'isDataURI',
-      'isMagnetURI',
-      'isDecimal',
-      'isEmail',
-      'isFQDN',
-      'isFullWidth',
-      'isHalfWidth',
-      'isHash',
-      'isHexColor',
-      'isHexadecimal',
-      'isIdentityCard',
-      'isIP',
-      'isIPRange',
-      'isISBN',
-      'isJSON',
-      'isJWT',
-      'isLatLong',
-      'isLowercase',
-      'isMD5',
-      'isMobilePhone',
-      'isMongoId',
-      'isMultibyte',
-      'isNumeric',
-      'isPort',
-      'isPostalCode',
-      'isURL',
-      'isUUID',
-      'isUppercase',
-      'isVariableWidth',
-      'isWhitelisted',
-    ]),
-    isMatch: validators.matches,
-    isEqual: validators.isEqual,
-    isEqualWith: validators.isEqualWith,
-  },
-  [validators.isString],
-);
+validators.string = () =>
+  new ValidatorStack(
+    {
+      ...pick(validators, [
+        'isLength',
+        'isMinLength',
+        'isMaxLength',
+        'isRegexMatch',
+        'isAlpha',
+        'isAlphanumeric',
+        'isAscii',
+        'isBase64',
+        'isCreditCard',
+        'isCurrency',
+        'isDataURI',
+        'isMagnetURI',
+        'isDecimal',
+        'isEmail',
+        'isFQDN',
+        'isFullWidth',
+        'isHalfWidth',
+        'isHash',
+        'isHexColor',
+        'isHexadecimal',
+        'isIdentityCard',
+        'isIP',
+        'isIPRange',
+        'isISBN',
+        'isJSON',
+        'isJWT',
+        'isLatLong',
+        'isLowercase',
+        'isMD5',
+        'isMobilePhone',
+        'isMongoId',
+        'isMultibyte',
+        'isNumeric',
+        'isPort',
+        'isPostalCode',
+        'isURL',
+        'isUUID',
+        'isUppercase',
+        'isVariableWidth',
+        'isWhitelisted',
+      ]),
+      isMatch: validators.matches,
+      isEqual: validators.isEqual,
+      isEqualWith: validators.isEqualWith,
+    },
+    [validators.isString],
+  );
 
-validators.number = createChainedValidator(
-  {
-    ...pick(validators, [
-      'isFinite',
-      'isInteger',
-      'isSafeInteger',
-      'isExclusiveMaximum',
-      'isExclusiveMinimum',
-      'isMaximum',
-      'isMinimum',
-      'isCloseTo',
-    ]),
-    isEqual: validators.isEqual,
-    isEqualWith: validators.isEqualWith,
-  },
-  [validators.isNumber],
-);
+validators.number = () =>
+  new ValidatorStack(
+    {
+      ...pick(validators, [
+        'isFinite',
+        'isInteger',
+        'isSafeInteger',
+        'isExclusiveMaximum',
+        'isExclusiveMinimum',
+        'isMaximum',
+        'isMinimum',
+        'isCloseTo',
+      ]),
+      isEqual: validators.isEqual,
+      isEqualWith: validators.isEqualWith,
+    },
+    [validators.isNumber],
+  );
 
-validators.date = createChainedValidator(
-  {
-    ...createValidators({
-      isAfter: dateIsAfter,
-      isBefore: dateIsBefore,
-      isEqual: dateIsEqual,
-      isFirstDayOfMonth: dateIsFirstDayOfMonth,
-      isFriday: dateIsFriday,
-      isLastDayOfMonth: dateIsLastDayOfMonth,
-      isLeapYear: dateIsLeapYear,
-      isMonday: dateIsMonday,
-      isSameDay: dateIsSameDay,
-      isSameHour: dateIsSameHour,
-      isSameISOWeek: dateIsSameISOWeek,
-      isSameISOYear: dateIsSameISOYear,
-      isSameMinute: dateIsSameMinute,
-      isSameMonth: dateIsSameMonth,
-      isSameQuarter: dateIsSameQuarter,
-      isSameSecond: dateIsSameSecond,
-      isSameWeek: dateIsSameWeek,
-      isSameYear: dateIsSameYear,
-      isSaturday: dateIsSaturday,
-      isSunday: dateIsSunday,
-      isThursday: dateIsThursday,
-      isTuesday: dateIsTuesday,
-      isWednesday: dateIsWednesday,
-      isWeekend: dateIsWeekend,
-      isWithinRange: dateIsWithinRange,
-      isValid: dateIsValid,
-    }),
-    isEqual: validators.isEqual,
-    isEqualWith: validators.isEqualWith,
-  },
-  [validators.isDate],
-);
+validators.date = () =>
+  new ValidatorStack(
+    {
+      ...createValidators({
+        isAfter: dateIsAfter,
+        isBefore: dateIsBefore,
+        isEqual: dateIsEqual,
+        isFirstDayOfMonth: dateIsFirstDayOfMonth,
+        isFriday: dateIsFriday,
+        isLastDayOfMonth: dateIsLastDayOfMonth,
+        isLeapYear: dateIsLeapYear,
+        isMonday: dateIsMonday,
+        isSameDay: dateIsSameDay,
+        isSameHour: dateIsSameHour,
+        isSameISOWeek: dateIsSameISOWeek,
+        isSameISOYear: dateIsSameISOYear,
+        isSameMinute: dateIsSameMinute,
+        isSameMonth: dateIsSameMonth,
+        isSameQuarter: dateIsSameQuarter,
+        isSameSecond: dateIsSameSecond,
+        isSameWeek: dateIsSameWeek,
+        isSameYear: dateIsSameYear,
+        isSaturday: dateIsSaturday,
+        isSunday: dateIsSunday,
+        isThursday: dateIsThursday,
+        isTuesday: dateIsTuesday,
+        isWednesday: dateIsWednesday,
+        isWeekend: dateIsWeekend,
+        isWithinRange: dateIsWithinRange,
+        isValid: dateIsValid,
+      }),
+      isEqual: validators.isEqual,
+      isEqualWith: validators.isEqualWith,
+    },
+    [validators.isDate],
+  );
 
-validators.array = createChainedValidator(
-  {
-    ...pick(validators, ['isMaxLength', 'isMinLength', 'isLength']),
-    isValid: validators.isArray,
-    isEqual: validators.isEqual,
-    isEqualWith: validators.isEqualWith,
-  },
-  [validators.isArray],
-);
+validators.array = () =>
+  new ValidatorStack(
+    {
+      ...pick(validators, ['isMaxLength', 'isMinLength', 'isLength']),
+      isValid: validators.isArray,
+      isEqual: validators.isEqual,
+      isEqualWith: validators.isEqualWith,
+    },
+    [validators.isArray],
+  );
 
-validators.object = createChainedValidator(
-  {
-    isSchema: validators.isObject,
-    isEqual: validators.isEqual,
-    isEqualWith: validators.isEqualWith,
-  },
-  [validators.isValidObject],
-);
+validators.object = () =>
+  new ValidatorStack(
+    {
+      isSchema: validators.isObject,
+      isEqual: validators.isEqual,
+      isEqualWith: validators.isEqualWith,
+    },
+    [validators.isValidObject],
+  );
 
 export default validators;

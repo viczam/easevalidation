@@ -41,7 +41,7 @@ describe('validators', () => {
     expect(
       test(
         isObject({
-          firstName: validators.string.isMinLength(3),
+          firstName: validators.string().isMinLength(3),
           lastName: [isString(), isMinLength(3)],
           age: [isNumber(), isMinimum(20), isMaximum(22)],
           location: isObject({
