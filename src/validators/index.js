@@ -39,7 +39,7 @@ import isAny from './isAny';
 import isEvery from './isEvery';
 import isSchema from './isSchema';
 import isArray from './isArray';
-import isIntanceOf from './isIntanceOf';
+import isInstanceOf from './isInstanceOf';
 import isMax from './isMax';
 import isMaxLength from './isMaxLength';
 import isMin from './isMin';
@@ -92,7 +92,7 @@ export default createValidators({
   isAny,
   isEvery,
   isArray,
-  isIntanceOf,
+  isInstanceOf,
   isMax,
   isMaxLength,
   isMin,

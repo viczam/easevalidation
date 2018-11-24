@@ -13,7 +13,7 @@ const walkError = error => {
     };
   }
 
-  if (error.code === 'isObject' && error.error) {
+  if (error.code === 'isSchema' && error.error) {
     return Object.keys(error.error).reduce(
       (acc, key) => ({
         ...acc,
