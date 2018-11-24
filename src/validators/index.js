@@ -53,7 +53,7 @@ import isValidNumber from './isValidNumber';
 import isCloseTo from './isCloseTo';
 import createValidators from '../createValidators';
 
-const validators = createValidators({
+export default createValidators({
   isArguments,
   isArrayBuffer,
   isArrayLike,
@@ -108,5 +108,3 @@ const validators = createValidators({
   isValidObject,
   ...validatorsJs,
 });
-
-export default validators;
