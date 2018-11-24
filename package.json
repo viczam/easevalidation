@@ -19,8 +19,7 @@
   "dependencies": {
     "lodash": "4.17.11",
     "date-fns": "1.29.0",
-    "validator": "10.9.0",
-    "pretty-format": "23.6.0"
+    "validator": "10.9.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",

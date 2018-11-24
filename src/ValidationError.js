@@ -1,12 +1,10 @@
-import prettyFormat from 'pretty-format';
-
 export const flag = Symbol('validationErrorFlag');
 
 class ValidationError extends Error {
   constructor({ value, code, config, error }) {
     super();
     this.name = 'ValidationError';
-    this.message = `Failed Validation! ${prettyFormat(value)} failed passing "${code}" validator!`;
+    this.message = `Failed passing "${code}" validator!${error ? ` (${error.message})` : ''}`;
     this.value = value;
     this.code = code;
     this.config = config;
