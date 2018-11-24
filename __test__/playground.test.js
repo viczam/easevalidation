@@ -137,4 +137,11 @@ describe('validators', () => {
       }),
     ).toBeTruthy();
   });
+
+  it('when failing, validate.error should be present', () => {
+    const validateFn = test(v.isNumber(), v.isMin(10), v.isMax(15));
+    expect(validateFn(9)).toBeFalsy();
+    expect(validateFn.error).toBeDefined();
+    expect(validateFn.error.message).toMatch(/isMin/);
+  });
 });
