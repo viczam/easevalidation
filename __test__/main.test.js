@@ -1,4 +1,4 @@
-import { test, validate, validators as v, createValidator } from '../src';
+import { test, validate, validators as v, createValidator, number, string, object } from '../src';
 
 const isOdd = createValidator('isOdd', value => value % 2);
 const isEven = createValidator('isEven', value => !test(isOdd())(value));
@@ -15,8 +15,7 @@ describe('validators', () => {
 
   it('should validate number using a chained validator', () => {
     expect(
-      v
-        .number()
+      number()
         .extend({
           isEven,
         })
@@ -105,25 +104,23 @@ describe('validators', () => {
   it('should validate object by schema built with chained validators', () => {
     expect(
       test(
-        v.object().isSchema({
-          firstName: v.string().isMinLength(3),
-          lastName: v.string().isMinLength(3),
-          age: v
-            .number()
+        object().isSchema({
+          firstName: string().isMinLength(3),
+          lastName: string().isMinLength(3),
+          age: number()
             .isMin(20)
             .isMax(22),
-          location: v.object().isSchema({
-            address: v.string().isMinLength(5),
-            lat: v.number().isMin(0),
-            lng: v.number().isMin(0),
-            something: v.object().isSchema({
-              bleah: v
-                .string()
+          location: object().isSchema({
+            address: string().isMinLength(5),
+            lat: number().isMin(0),
+            lng: number().isMin(0),
+            something: object().isSchema({
+              bleah: string()
                 .isRequired()
                 .isAlpha(),
             }),
           }),
-          password: v.string().isEqual('test'),
+          password: string().isEqual('test'),
         }),
       )({
         firstName: 'victor',

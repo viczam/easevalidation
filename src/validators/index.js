@@ -1,4 +1,3 @@
-import pick from 'lodash/pick';
 import isArguments from 'lodash/isArguments';
 import isValidObject from 'lodash/isObject';
 import isArrayBuffer from 'lodash/isArrayBuffer';
@@ -36,32 +35,6 @@ import isUndefined from 'lodash/isUndefined';
 import isWeakMap from 'lodash/isWeakMap';
 import isWeakSet from 'lodash/isWeakSet';
 import validatorsJs from 'validator';
-import dateIsAfter from 'date-fns/is_after';
-import dateIsBefore from 'date-fns/is_before';
-import dateIsEqual from 'date-fns/is_equal';
-import dateIsFirstDayOfMonth from 'date-fns/is_first_day_of_month';
-import dateIsFriday from 'date-fns/is_friday';
-import dateIsLastDayOfMonth from 'date-fns/is_last_day_of_month';
-import dateIsLeapYear from 'date-fns/is_leap_year';
-import dateIsMonday from 'date-fns/is_monday';
-import dateIsSameDay from 'date-fns/is_same_day';
-import dateIsSameHour from 'date-fns/is_same_hour';
-import dateIsSameISOWeek from 'date-fns/is_same_iso_week';
-import dateIsSameISOYear from 'date-fns/is_same_iso_year';
-import dateIsSameMinute from 'date-fns/is_same_minute';
-import dateIsSameMonth from 'date-fns/is_same_month';
-import dateIsSameQuarter from 'date-fns/is_same_quarter';
-import dateIsSameSecond from 'date-fns/is_same_second';
-import dateIsSameWeek from 'date-fns/is_same_week';
-import dateIsSameYear from 'date-fns/is_same_year';
-import dateIsSaturday from 'date-fns/is_saturday';
-import dateIsSunday from 'date-fns/is_sunday';
-import dateIsThursday from 'date-fns/is_thursday';
-import dateIsTuesday from 'date-fns/is_tuesday';
-import dateIsValid from 'date-fns/is_valid';
-import dateIsWednesday from 'date-fns/is_wednesday';
-import dateIsWeekend from 'date-fns/is_weekend';
-import dateIsWithinRange from 'date-fns/is_within_range';
 import any from './any';
 import every from './every';
 import isObject from './isObject';
@@ -79,203 +52,61 @@ import isValid from './isValid';
 import isValidNumber from './isValidNumber';
 import isCloseTo from './isCloseTo';
 import createValidators from '../createValidators';
-import ValidatorStack from '../ValidatorStack';
 
-const validators = {
-  ...createValidators({
-    isArguments,
-    isArrayBuffer,
-    isArrayLike,
-    isArrayLikeObject,
-    isBoolean,
-    isBuffer,
-    isDate,
-    isElement,
-    isEmpty,
-    isEqual,
-    isEqualWith,
-    isError,
-    isFinite,
-    isFunction,
-    isInteger,
-    isLength,
-    isMap,
-    isMatch,
-    isMatchWith,
-    isNaN,
-    isNative,
-    isNil,
-    isNull,
-    isNumber,
-    isObject,
-    isObjectLike,
-    isPlainObject,
-    isRegExp,
-    isSafeInteger,
-    isSet,
-    isString,
-    isSymbol,
-    isTypedArray,
-    isUndefined,
-    isWeakMap,
-    isWeakSet,
-    any,
-    every,
-    isArray,
-    isIntanceOf,
-    isMax,
-    isMaxLength,
-    isMin,
-    isMinLength,
-    isOneOf,
-    isProperty,
-    isPropertyEqual,
-    isRequired,
-    isValid,
-    isValidNumber,
-    isCloseTo,
-    isValidObject,
-    ...validatorsJs,
-  }),
-};
-
-validators.string = () =>
-  new ValidatorStack(
-    {
-      ...pick(validators, [
-        'isLength',
-        'isMinLength',
-        'isMaxLength',
-        'isAlpha',
-        'isAlphanumeric',
-        'isAscii',
-        'isBase64',
-        'isCreditCard',
-        'isCurrency',
-        'isDataURI',
-        'isMagnetURI',
-        'isDecimal',
-        'isEmail',
-        'isFQDN',
-        'isFullWidth',
-        'isHalfWidth',
-        'isHash',
-        'isHexColor',
-        'isHexadecimal',
-        'isIdentityCard',
-        'isIP',
-        'isIPRange',
-        'isISBN',
-        'isJSON',
-        'isJWT',
-        'isLatLong',
-        'isLowercase',
-        'isMD5',
-        'isMobilePhone',
-        'isMongoId',
-        'isMultibyte',
-        'isNumeric',
-        'isPort',
-        'isPostalCode',
-        'isURL',
-        'isUUID',
-        'isUppercase',
-        'isVariableWidth',
-        'isWhitelisted',
-      ]),
-      isMatch: validators.matches,
-      isEqual: validators.isEqual,
-      isEqualWith: validators.isEqualWith,
-      isRequired: validators.isRequired,
-      isValid: validators.isValid,
-      isOneOf: validators.isOneOf,
-      isValidNumber: validators.isValidNumber,
-    },
-    [validators.isString],
-  );
-
-validators.number = () =>
-  new ValidatorStack(
-    {
-      ...pick(validators, [
-        'isFinite',
-        'isInteger',
-        'isSafeInteger',
-        'isMax',
-        'isMin',
-        'isCloseTo',
-      ]),
-      isEqual: validators.isEqual,
-      isEqualWith: validators.isEqualWith,
-      isValid: validators.isValid,
-      isOneOf: validators.isOneOf,
-    },
-    [validators.isNumber],
-  );
-
-validators.date = () =>
-  new ValidatorStack(
-    {
-      ...createValidators({
-        isAfter: dateIsAfter,
-        isBefore: dateIsBefore,
-        isEqual: dateIsEqual,
-        isFirstDayOfMonth: dateIsFirstDayOfMonth,
-        isFriday: dateIsFriday,
-        isLastDayOfMonth: dateIsLastDayOfMonth,
-        isLeapYear: dateIsLeapYear,
-        isMonday: dateIsMonday,
-        isSameDay: dateIsSameDay,
-        isSameHour: dateIsSameHour,
-        isSameISOWeek: dateIsSameISOWeek,
-        isSameISOYear: dateIsSameISOYear,
-        isSameMinute: dateIsSameMinute,
-        isSameMonth: dateIsSameMonth,
-        isSameQuarter: dateIsSameQuarter,
-        isSameSecond: dateIsSameSecond,
-        isSameWeek: dateIsSameWeek,
-        isSameYear: dateIsSameYear,
-        isSaturday: dateIsSaturday,
-        isSunday: dateIsSunday,
-        isThursday: dateIsThursday,
-        isTuesday: dateIsTuesday,
-        isWednesday: dateIsWednesday,
-        isWeekend: dateIsWeekend,
-        isWithinRange: dateIsWithinRange,
-        isValid: dateIsValid,
-      }),
-      isValid: validators.isValid,
-      isOneOf: validators.isOneOf,
-    },
-    [validators.isDate],
-  );
-
-validators.array = () =>
-  new ValidatorStack(
-    {
-      ...pick(validators, ['isMaxLength', 'isMinLength', 'isLength']),
-      isValidElement: validators.isArray,
-      isValid: validators.isValid,
-      isEqual: validators.isEqual,
-      isEqualWith: validators.isEqualWith,
-      isEmpty: validators.isEmpty,
-    },
-    [validators.isArray],
-  );
-
-validators.object = () =>
-  new ValidatorStack(
-    {
-      isSchema: validators.isObject,
-      isProperty: validators.isProperty,
-      isEqual: validators.isEqual,
-      isEqualWith: validators.isEqualWith,
-      isEmpty: validators.isEmpty,
-      isPropertyEqual: validators.isPropertyEqual,
-      isValid: validators.isValid,
-      isOneOf: validators.isOneOf,
-    },
-    [validators.isValidObject],
-  );
+const validators = createValidators({
+  isArguments,
+  isArrayBuffer,
+  isArrayLike,
+  isArrayLikeObject,
+  isBoolean,
+  isBuffer,
+  isDate,
+  isElement,
+  isEmpty,
+  isEqual,
+  isEqualWith,
+  isError,
+  isFinite,
+  isFunction,
+  isInteger,
+  isLength,
+  isMap,
+  isMatch,
+  isMatchWith,
+  isNaN,
+  isNative,
+  isNil,
+  isNull,
+  isNumber,
+  isObject,
+  isObjectLike,
+  isPlainObject,
+  isRegExp,
+  isSafeInteger,
+  isSet,
+  isString,
+  isSymbol,
+  isTypedArray,
+  isUndefined,
+  isWeakMap,
+  isWeakSet,
+  any,
+  every,
+  isArray,
+  isIntanceOf,
+  isMax,
+  isMaxLength,
+  isMin,
+  isMinLength,
+  isOneOf,
+  isProperty,
+  isPropertyEqual,
+  isRequired,
+  isValid,
+  isValidNumber,
+  isCloseTo,
+  isValidObject,
+  ...validatorsJs,
+});
 
 export default validators;
