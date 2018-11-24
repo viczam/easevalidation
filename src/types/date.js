@@ -28,7 +28,7 @@ import ValidatorStack from '../ValidatorStack';
 import validators from '../validators';
 import createValidators from '../createValidators';
 
-export default () =>
+export default (validatorsMap = {}) =>
   new ValidatorStack(
     {
       ...createValidators({
@@ -57,10 +57,11 @@ export default () =>
         isWednesday: dateIsWednesday,
         isWeekend: dateIsWeekend,
         isWithinRange: dateIsWithinRange,
-        isValid: dateIsValid,
+        isValidDate: dateIsValid,
       }),
       isValid: validators.isValid,
       isOneOf: validators.isOneOf,
+      ...validatorsMap,
     },
     [validators.isDate],
   );

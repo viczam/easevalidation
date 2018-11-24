@@ -2,7 +2,7 @@ import pick from 'lodash/pick';
 import ValidatorStack from '../ValidatorStack';
 import validators from '../validators';
 
-export default () =>
+export default (validatorsMap = {}) =>
   new ValidatorStack(
     {
       ...pick(validators, [
@@ -53,6 +53,7 @@ export default () =>
       isValid: validators.isValid,
       isOneOf: validators.isOneOf,
       isValidNumber: validators.isValidNumber,
+      ...validatorsMap,
     },
     [validators.isString],
   );

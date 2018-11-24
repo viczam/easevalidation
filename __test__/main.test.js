@@ -15,10 +15,9 @@ describe('validators', () => {
 
   it('should validate number using a chained validator', () => {
     expect(
-      number()
-        .extend({
-          isEven,
-        })
+      number({
+        isEven,
+      })
         .isMin(3)
         .isMax(5)
         .isEven()
@@ -33,15 +32,15 @@ describe('validators', () => {
   it('should validate object by schema', () => {
     expect(
       test(
-        v.isObject({
+        v.isSchema({
           firstName: [v.isString(), v.isMinLength(3)],
           lastName: [v.isString(), v.isMinLength(3)],
           age: [v.isNumber(), v.isMin(20), v.isMax(22)],
-          location: v.isObject({
+          location: v.isSchema({
             address: [v.isString(), v.isMinLength(5)],
             lat: [v.isRequired(), v.isNumber()],
             lng: [v.isRequired(), v.isNumber()],
-            something: v.isObject({
+            something: v.isSchema({
               bleah: [v.isRequired(), v.isString(), v.isAlpha()],
             }),
           }),

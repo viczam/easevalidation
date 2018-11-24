@@ -1,10 +1,10 @@
 import ValidatorStack from '../ValidatorStack';
 import validators from '../validators';
 
-export default () =>
+export default (validatorsMap = {}) =>
   new ValidatorStack(
     {
-      isSchema: validators.isObject,
+      isSchema: validators.isSchema,
       isProperty: validators.isProperty,
       isEqual: validators.isEqual,
       isEqualWith: validators.isEqualWith,
@@ -12,6 +12,7 @@ export default () =>
       isPropertyEqual: validators.isPropertyEqual,
       isValid: validators.isValid,
       isOneOf: validators.isOneOf,
+      ...validatorsMap,
     },
-    [validators.isValidObject],
+    [validators.isObject],
   );

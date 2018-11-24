@@ -1,5 +1,5 @@
 import isArguments from 'lodash/isArguments';
-import isValidObject from 'lodash/isObject';
+import isObject from 'lodash/isObject';
 import isArrayBuffer from 'lodash/isArrayBuffer';
 import isArrayLike from 'lodash/isArrayLike';
 import isArrayLikeObject from 'lodash/isArrayLikeObject';
@@ -37,7 +37,7 @@ import isWeakSet from 'lodash/isWeakSet';
 import validatorsJs from 'validator';
 import any from './any';
 import every from './every';
-import isObject from './isObject';
+import isSchema from './isSchema';
 import isArray from './isArray';
 import isIntanceOf from './isIntanceOf';
 import isMax from './isMax';
@@ -78,7 +78,6 @@ export default createValidators({
   isNil,
   isNull,
   isNumber,
-  isObject,
   isObjectLike,
   isPlainObject,
   isRegExp,
@@ -105,6 +104,7 @@ export default createValidators({
   isValid,
   isValidNumber,
   isCloseTo,
-  isValidObject,
+  isObject,
+  isSchema,
   ...validatorsJs,
 });
