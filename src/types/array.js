@@ -5,12 +5,16 @@ import validators from '../validators';
 export default (validatorsMap = {}) =>
   new ValidatorStack(
     {
-      ...pick(validators, ['isMaxLength', 'isMinLength', 'isLength']),
+      ...pick(validators, [
+        'isMaxLength',
+        'isMinLength',
+        'isLength',
+        'isValid',
+        'isEqual',
+        'isEqualWith',
+        'isEmpty',
+      ]),
       isValidElement: validators.isArray,
-      isValid: validators.isValid,
-      isEqual: validators.isEqual,
-      isEqualWith: validators.isEqualWith,
-      isEmpty: validators.isEmpty,
       ...validatorsMap,
     },
     [validators.isArray],
