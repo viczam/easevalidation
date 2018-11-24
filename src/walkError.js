@@ -23,7 +23,7 @@ const walkError = error => {
     );
   }
 
-  if (error.code === 'every') {
+  if (error.code === 'isEvery') {
     return walkError(error.error);
   }
 

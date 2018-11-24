@@ -1,5 +1,5 @@
 import flatten from 'lodash/flatten';
-import { test, validate, validators as v } from './index';
+import { test, validate } from './index';
 import createValidator from './createValidator';
 
 class ValidatorStack {
@@ -8,7 +8,7 @@ class ValidatorStack {
     this.extend(knownValidators);
   }
 
-  toValidator = code => createValidator(code, v.every(this.stack))();
+  toValidator = code => createValidator(code, test(this.stack))();
 
   test = value => test(this.stack)(value);
 

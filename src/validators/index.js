@@ -35,8 +35,8 @@ import isUndefined from 'lodash/isUndefined';
 import isWeakMap from 'lodash/isWeakMap';
 import isWeakSet from 'lodash/isWeakSet';
 import validatorsJs from 'validator';
-import any from './any';
-import every from './every';
+import isAny from './isAny';
+import isEvery from './isEvery';
 import isSchema from './isSchema';
 import isArray from './isArray';
 import isIntanceOf from './isIntanceOf';
@@ -89,8 +89,8 @@ export default createValidators({
   isUndefined,
   isWeakMap,
   isWeakSet,
-  any,
-  every,
+  isAny,
+  isEvery,
   isArray,
   isIntanceOf,
   isMax,

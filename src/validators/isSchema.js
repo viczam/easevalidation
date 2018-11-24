@@ -1,7 +1,7 @@
 import createValidator from '../createValidator';
-import every from './every';
+import isEvery from './isEvery';
 
-const everyValidator = createValidator('every', every);
+const everyValidator = createValidator('every', isEvery);
 
 export default (value, schema) => {
   if (typeof value !== 'object') {
