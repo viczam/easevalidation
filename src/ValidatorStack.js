@@ -6,11 +6,17 @@ class ValidatorStack {
   constructor(knownValidators = {}, initialValidators = []) {
     this.stack = initialValidators;
     this.extend(knownValidators);
+    this.error = null;
   }
 
   toValidator = code => createValidator(code, test(this.stack))();
 
-  test = value => test(this.stack)(value);
+  test = value => {
+    const doValidate = test(this.stack);
+    const isValid = doValidate(value);
+    this.error = doValidate.error;
+    return isValid;
+  };
 
   validate = value => validate(this.stack)(value);
 
