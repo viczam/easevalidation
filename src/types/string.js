@@ -7,8 +7,6 @@ export default (validatorsMap = {}) =>
     {
       ...pick(validators, [
         'isLength',
-        'isMinLength',
-        'isMaxLength',
         'isAlpha',
         'isAlphanumeric',
         'isAscii',
@@ -35,7 +33,6 @@ export default (validatorsMap = {}) =>
         'isLowercase',
         'isMD5',
         'isMobilePhone',
-        'isMongoId',
         'isMultibyte',
         'isNumeric',
         'isPort',
@@ -51,8 +48,10 @@ export default (validatorsMap = {}) =>
         'isValid',
         'isOneOf',
         'isValidNumber',
+        'isInteger',
+        'isRegExpMatch',
+        'isObjectId',
       ]),
-      isMatch: validators.matches,
       ...validatorsMap,
     },
     [validators.isString],

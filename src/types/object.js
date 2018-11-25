@@ -14,6 +14,7 @@ export default (validatorsMap = {}) =>
         'isPropertyEqual',
         'isValid',
         'isOneOf',
+        'isObjectId',
       ]),
       ...validatorsMap,
     },

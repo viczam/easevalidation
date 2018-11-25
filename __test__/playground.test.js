@@ -33,11 +33,11 @@ describe('validators', () => {
     expect(
       test(
         v.isSchema({
-          firstName: [v.isString(), v.isMinLength(3)],
-          lastName: [v.isString(), v.isMinLength(3)],
+          firstName: [v.isString(), v.isLength({ min: 3 })],
+          lastName: [v.isString(), v.isLength({ min: 3 })],
           age: [v.isNumber(), v.isMin(20), v.isMax(22)],
           location: v.isSchema({
-            address: [v.isString(), v.isMinLength(5)],
+            address: [v.isString(), v.isLength({ min: 5 })],
             lat: [v.isRequired(), v.isNumber()],
             lng: [v.isRequired(), v.isNumber()],
             something: v.isSchema({
@@ -67,13 +67,13 @@ describe('validators', () => {
     expect(
       test(
         v.isPlainObject(),
-        v.isProperty('firstName', v.isString(), v.isMinLength(3)),
-        v.isProperty('lastName', v.isString(), v.isMinLength(3)),
+        v.isProperty('firstName', v.isString(), v.isLength({ min: 3 })),
+        v.isProperty('lastName', v.isString(), v.isLength({ min: 3 })),
         v.isProperty('age', v.isNumber(), v.isMin(20), v.isMax(22)),
         v.isProperty(
           'location',
           v.isPlainObject(),
-          v.isProperty('address', v.isString(), v.isMinLength(5)),
+          v.isProperty('address', v.isString(), v.isLength({ min: 5 })),
           v.isProperty('lat', v.isRequired(), v.isNumber()),
           v.isProperty('lng', v.isRequired(), v.isNumber()),
           v.isProperty(
@@ -104,13 +104,13 @@ describe('validators', () => {
     expect(
       test(
         object().isSchema({
-          firstName: string().isMinLength(3),
-          lastName: string().isMinLength(3),
+          firstName: string().isLength({ min: 3 }),
+          lastName: string().isLength({ min: 3 }),
           age: number()
             .isMin(20)
             .isMax(22),
           location: object().isSchema({
-            address: string().isMinLength(5),
+            address: string().isLength({ min: 5 }),
             lat: number().isMin(0),
             lng: number().isMin(0),
             something: object().isSchema({

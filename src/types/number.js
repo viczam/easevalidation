@@ -16,6 +16,7 @@ export default (validatorsMap = {}) =>
         'isEqualWith',
         'isValid',
         'isOneOf',
+        'isInteger',
       ]),
       ...validatorsMap,
     },

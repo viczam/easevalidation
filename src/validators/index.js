@@ -1,3 +1,4 @@
+import pick from 'lodash/pick';
 import isArguments from 'lodash/isArguments';
 import isObject from 'lodash/isObject';
 import isArrayBuffer from 'lodash/isArrayBuffer';
@@ -13,8 +14,6 @@ import isEqualWith from 'lodash/isEqualWith';
 import isError from 'lodash/isError';
 import isFinite from 'lodash/isFinite';
 import isFunction from 'lodash/isFunction';
-import isInteger from 'lodash/isInteger';
-import isLength from 'lodash/isLength';
 import isMap from 'lodash/isMap';
 import isMatch from 'lodash/isMatch';
 import isMatchWith from 'lodash/isMatchWith';
@@ -41,9 +40,8 @@ import isSchema from './isSchema';
 import isArray from './isArray';
 import isInstanceOf from './isInstanceOf';
 import isMax from './isMax';
-import isMaxLength from './isMaxLength';
+import isLength from './isLength';
 import isMin from './isMin';
-import isMinLength from './isMinLength';
 import isOneOf from './isOneOf';
 import isProperty from './isProperty';
 import isPropertyEqual from './isPropertyEqual';
@@ -51,6 +49,8 @@ import isRequired from './isRequired';
 import isValid from './isValid';
 import isValidNumber from './isValidNumber';
 import isCloseTo from './isCloseTo';
+import isInteger from './isInteger';
+import isObjectId from './isObjectId';
 import createValidators from '../createValidators';
 
 export default createValidators({
@@ -68,7 +68,6 @@ export default createValidators({
   isError,
   isFinite,
   isFunction,
-  isInteger,
   isLength,
   isMap,
   isMatch,
@@ -94,9 +93,7 @@ export default createValidators({
   isArray,
   isInstanceOf,
   isMax,
-  isMaxLength,
   isMin,
-  isMinLength,
   isOneOf,
   isProperty,
   isPropertyEqual,
@@ -106,5 +103,55 @@ export default createValidators({
   isCloseTo,
   isObject,
   isSchema,
-  ...validatorsJs,
+  isInteger,
+  isObjectId,
+  isRegExpMatch: validatorsJs.matches,
+  ...pick(validatorsJs, [
+    'isAlphanumeric',
+    'isAlpha',
+    'isAscii',
+    'isBase64',
+    'isByteLength',
+    'isCreditCard',
+    'isCurrency',
+    'isDataURI',
+    'isDecimal',
+    'isEmail',
+    'isFQDN',
+    'isFullWidth',
+    'isHalfWidth',
+    'isHash',
+    'isHexColor',
+    'isHexadecimal',
+    'isIP',
+    'isIPRange',
+    'isISBN',
+    'isISIN',
+    'isISO31661Alpha2',
+    'isISO31661Alpha3',
+    'isISO8601',
+    'isISRC',
+    'isISSN',
+    'isIdentityCard',
+    'isJSON',
+    'isJWT',
+    'isLatLong',
+    'isLowercase',
+    'isMACAddress',
+    'isMD5',
+    'isMagnetURI',
+    'isMimeType',
+    'isMobilePhone',
+    'isMultibyte',
+    'isNumeric',
+    'isPort',
+    'isPostalCode',
+    'isRFC3339',
+    'isSurrogatePair',
+    'isURL',
+    'isUUID',
+    'isUppercase',
+    'isVariableWidth',
+    'isWhitelisted',
+  ]),
 });

@@ -25,10 +25,16 @@ describe('docs', () => {
   });
 
   it('example 3', () => {
-    const { isSchema, isEmail, isRequired, isString, isMinLength } = validators;
+    const { isSchema, isEmail, isRequired, isString, isLength } = validators;
     const schema = isSchema({
       email: [isEmail()],
-      password: [isRequired(), isString(), isMinLength(5)],
+      password: [
+        isRequired(),
+        isString(),
+        isLength({
+          min: 5,
+        }),
+      ],
     });
 
     expect(
@@ -40,11 +46,11 @@ describe('docs', () => {
   });
 
   it('example 4', () => {
-    const { isPlainObject, isProperty, isEmail, isRequired, isString, isMinLength } = validators;
+    const { isPlainObject, isProperty, isEmail, isRequired, isString, isLength } = validators;
     const schema = [
       isPlainObject(),
       isProperty('email', isEmail()),
-      isProperty('password', isRequired(), isString(), isMinLength(5)),
+      isProperty('password', isRequired(), isString(), isLength({ min: 5 })),
     ];
 
     expect(
