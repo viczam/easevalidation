@@ -8,43 +8,49 @@ const createError = ({ value, code, config, error }) =>
     error,
   });
 
-export default (...args) => {
-  let code;
-  let validator;
-
-  if (args.length === 1) {
-    validator = args[0];
-    code = validator.name;
-  } else {
-    [code, validator] = args;
+const toResult = (result, value) => {
+  if (typeof result === 'boolean') {
+    return {
+      isValid: result,
+      value,
+    };
   }
 
-  return (...config) => {
-    const validate = value => {
-      try {
-        const isValid = validator(value, ...config);
-
-        if (!isValid) {
-          throw createError({ value, code, config });
-        }
-
-        return value;
-      } catch (error) {
-        if (!(error instanceof ValidationError)) {
-          throw createError({ value, code, config, error });
-        }
-
-        throw error;
-      }
+  if (typeof result === 'object') {
+    return {
+      value,
+      ...result,
     };
+  }
 
-    Object.assign(validate, {
-      __validation__: {
-        code,
-        config,
-      },
-    });
+  throw new Error(`Invalid validator result: ${result}!`);
+};
 
-    return validate;
+export default (code, validator, setValue) => (...config) => {
+  const validate = startValue => {
+    try {
+      const { isValid, value } = toResult(validator(startValue, ...config), startValue);
+
+      if (!isValid) {
+        throw createError({ value: startValue, code, config });
+      }
+
+      return typeof setValue === 'function' ? setValue(value, ...config) : value;
+    } catch (error) {
+      if (!(error instanceof ValidationError)) {
+        throw createError({ value: startValue, code, config, error });
+      }
+
+      throw error;
+    }
   };
+
+  Object.assign(validate, {
+    __validation__: {
+      code,
+      config,
+    },
+  });
+
+  return validate;
 };

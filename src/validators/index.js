@@ -50,7 +50,6 @@ import isValid from './isValid';
 import isValidNumber from './isValidNumber';
 import isCloseTo from './isCloseTo';
 import isInteger from './isInteger';
-import isObjectId from './isObjectId';
 import createValidators from '../createValidators';
 
 export default createValidators({
@@ -104,7 +103,6 @@ export default createValidators({
   isObject,
   isSchema,
   isInteger,
-  isObjectId,
   isRegExpMatch: validatorsJs.matches,
   ...pick(validatorsJs, [
     'isAlphanumeric',
@@ -153,5 +151,6 @@ export default createValidators({
     'isUppercase',
     'isVariableWidth',
     'isWhitelisted',
+    'isMongoId',
   ]),
 });

@@ -1,21 +1,30 @@
 import { argsToValidators } from './helpers';
 
 export default (...args) => {
-  const validate = value =>
-    argsToValidators(args).reduce((isValid, validator) => {
+  const validate = initialValue => {
+    let value = initialValue;
+    let error;
+
+    const result = argsToValidators(args).reduce((isValid, validator) => {
       if (!isValid) {
         return isValid;
       }
 
       try {
-        validator(value);
-        validate.error = null;
+        value = validator(value);
+        error = null;
         return true;
-      } catch (error) {
-        validate.error = error;
+      } catch (err) {
+        error = err;
         return false;
       }
     }, true);
+
+    validate.value = value;
+    validate.error = error;
+
+    return result;
+  };
 
   return validate;
 };

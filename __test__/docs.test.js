@@ -7,7 +7,7 @@ describe('docs', () => {
     expect(test(isNumber(), isMin(10), isMax(15))(13)).toBeTruthy();
   });
 
-  it('example 2', () => {
+  xit('example 2', () => {
     expect(
       test(
         number()

@@ -3,13 +3,23 @@ import { test, validate } from './index';
 import createValidator from './createValidator';
 
 class ValidatorStack {
-  constructor(knownValidators = {}, initialValidators = []) {
+  constructor(code, knownValidators = {}, initialValidators = []) {
+    this.code = code;
     this.stack = initialValidators;
     this.extend(knownValidators);
     this.error = null;
   }
 
-  toValidator = code => createValidator(code, test(this.stack))();
+  toValidator = (code = this.code) =>
+    createValidator(code, value => {
+      const doValidate = test(this.stack);
+      const isValid = doValidate(value);
+
+      return {
+        isValid,
+        value: doValidate.value,
+      };
+    })();
 
   test = value => {
     const doValidate = test(this.stack);

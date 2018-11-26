@@ -10,15 +10,20 @@ export default (value, schema) => {
 
   const errors = Object.keys(schema).reduce((acc, propr) => {
     const validator = schema[propr];
+    let validate;
+
+    if (typeof validator.toValidator === 'function') {
+      validate = validator.toValidator();
+    } else if (Array.isArray(validator)) {
+      validate = everyValidator(...validator);
+    } else {
+      validate = validator;
+    }
 
     try {
-      if (typeof validator.toValidator === 'function') {
-        validator.toValidator()(value[propr]);
-      } else if (Array.isArray(validator)) {
-        everyValidator(...validator)(value[propr]);
-      } else {
-        validator(value[propr]);
-      }
+      Object.assign(value, {
+        [propr]: validate(value[propr]),
+      });
     } catch (err) {
       Object.assign(acc, {
         [propr]: err,

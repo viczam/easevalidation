@@ -30,6 +30,7 @@ import createValidators from '../createValidators';
 
 export default (validatorsMap = {}) =>
   new ValidatorStack(
+    'date',
     {
       ...createValidators({
         isAfter: dateIsAfter,
@@ -63,5 +64,5 @@ export default (validatorsMap = {}) =>
       isOneOf: validators.isOneOf,
       ...validatorsMap,
     },
-    [validators.isDate],
+    [validators.isDate()],
   );

@@ -5,7 +5,7 @@ describe('test', () => {
   let isBetween;
 
   beforeEach(() => {
-    isOdd = createValidator('isOdd', value => value % 2);
+    isOdd = createValidator('isOdd', value => !!(value % 2));
     isBetween = createValidator('isBetween', (value, min, max) => min <= value && value <= max);
   });
 

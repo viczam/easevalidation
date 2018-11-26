@@ -17,8 +17,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "lodash": "4.17.11",
     "date-fns": "1.29.0",
+    "lodash": "4.17.11",
     "validator": "10.9.0"
   },
   "devDependencies": {

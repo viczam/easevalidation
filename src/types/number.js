@@ -4,6 +4,7 @@ import validators from '../validators';
 
 export default (validatorsMap = {}) =>
   new ValidatorStack(
+    'number',
     {
       ...pick(validators, [
         'isFinite',
@@ -20,5 +21,5 @@ export default (validatorsMap = {}) =>
       ]),
       ...validatorsMap,
     },
-    [validators.isNumber],
+    [validators.isNumber()],
   );

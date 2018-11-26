@@ -3,7 +3,7 @@ import { test, validate, validators as v, createValidator, number, string, objec
 const isOdd = createValidator('isOdd', value => value % 2);
 const isEven = createValidator('isEven', value => !test(isOdd())(value));
 
-describe('validators', () => {
+describe('playground', () => {
   it('should return error', () => {
     expect(validate(isOdd())(2)).toBeInstanceOf(Error);
     expect(validate(isOdd())(2).message).toMatch(/isOdd/);

@@ -4,6 +4,7 @@ import validators from '../validators';
 
 export default (validatorsMap = {}) =>
   new ValidatorStack(
+    'string',
     {
       ...pick(validators, [
         'isLength',
@@ -50,9 +51,9 @@ export default (validatorsMap = {}) =>
         'isValidNumber',
         'isInteger',
         'isRegExpMatch',
-        'isObjectId',
+        'isMongoId',
       ]),
       ...validatorsMap,
     },
-    [validators.isString],
+    [validators.isString()],
   );

@@ -4,6 +4,7 @@ import validators from '../validators';
 
 export default (validatorsMap = {}) =>
   new ValidatorStack(
+    'object',
     {
       ...pick(validators, [
         'isSchema',
@@ -14,9 +15,8 @@ export default (validatorsMap = {}) =>
         'isPropertyEqual',
         'isValid',
         'isOneOf',
-        'isObjectId',
       ]),
       ...validatorsMap,
     },
-    [validators.isObject],
+    [validators.isObject()],
   );
