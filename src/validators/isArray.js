@@ -1,14 +1,14 @@
 import validate from '../validate';
 
-export default (value, itemValidator) => {
+export default (value, ...validators) => {
   if (!Array.isArray(value)) {
     return false;
   }
 
-  if (itemValidator) {
+  if (validators.length) {
     return {
       isValid: true,
-      value: value.map(item => validate(itemValidator)(item)),
+      value: value.map(item => validate(...validators)(item)),
     };
   }
 

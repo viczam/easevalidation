@@ -1,6 +1,16 @@
 import { validators, test } from '../src';
 
-const { isNumber, isPositive, isPrecision, isNegative, isTruthy, isFalsy } = validators;
+const {
+  isNumber,
+  isPositive,
+  isPrecision,
+  isNegative,
+  isTruthy,
+  isFalsy,
+  isArray,
+  isOneOf,
+  isValid,
+} = validators;
 
 describe('validators', () => {
   it('isNumber', () => {
@@ -51,5 +61,29 @@ describe('validators', () => {
     expect(test(isFalsy())({})).toBeFalsy();
     expect(test(isFalsy())('')).toBeTruthy();
     expect(test(isFalsy())(0)).toBeTruthy();
+  });
+
+  it('isArray', () => {
+    expect(test(isArray())([])).toBeTruthy();
+    expect(test(isArray())([1, 2, 3])).toBeTruthy();
+    expect(test(isArray())('fsafa')).toBeFalsy();
+    expect(test(isArray(isNumber()))([1, 2, 3])).toBeTruthy();
+    expect(test(isArray(isNumber()))([1, 'a', 3])).toBeFalsy();
+    expect(test(isArray(isNumber(), isPositive()))([1, 2, 3])).toBeTruthy();
+    expect(test(isArray(isNumber(), isPositive()))([1, -2, 3])).toBeFalsy();
+  });
+
+  it('isOneOf', () => {
+    expect(test(isOneOf(['a', 'b']))('a')).toBeTruthy();
+    expect(test(isOneOf(['a', 'b']))('c')).toBeFalsy();
+    expect(test(isOneOf([1, 2]))(2)).toBeTruthy();
+    expect(test(isOneOf([1, 2]))('2')).toBeFalsy();
+  });
+
+  it('isValid', () => {
+    expect(test(isValid(() => true))('a')).toBeTruthy();
+    expect(test(isValid(() => false))('a')).toBeFalsy();
+    expect(test(isValid(val => val))(true)).toBeTruthy();
+    expect(test(isValid(val => val))(false)).toBeFalsy();
   });
 });
