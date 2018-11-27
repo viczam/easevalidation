@@ -85,3 +85,38 @@ const isValid = test(isBetween(10, 15))(13); // true
 ```
 
 Validators can also update the value they receive for testing.
+
+```js
+import { createValidator, test } from 'easevalidation';
+import { ObjectID as objectId } from 'mongodb';
+
+const isObjectId = createValidator(
+  'isObjectId',
+  value => objectId.isValid(id),
+  value => objectId(value),
+);
+
+const isValid = test(isObjectId())('5bf6cd3e766582a5bf892519');
+```
+
+As you can see, the signature of `createValidator` is:
+
+```js
+createValidator(String code, Function validate, Function updateValue)
+```
+
+Keep in mind that updateValue will run **after** validate function tests the value and **only** if it returns true (`value` passes validation).
+
+Another way to update the value is by returning an object from `validate`:
+
+```js
+import { createValidator, test } from 'easevalidation';
+import { ObjectID as objectId } from 'mongodb';
+
+const isObjectId = createValidator('isObjectId', value => ({
+  isValid: objectId.isValid(id),
+  value: objectId(value),
+}));
+
+const isValid = test(isObjectId())('5bf6cd3e766582a5bf892519');
+```
