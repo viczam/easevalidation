@@ -120,3 +120,66 @@ const isObjectId = createValidator('isObjectId', value => ({
 
 const isValid = test(isObjectId())('5bf6cd3e766582a5bf892519');
 ```
+
+Sometimes you may want to get access to the final updated value, besides just testing it.
+
+```js
+import { createValidator, test, validators } from 'easevalidation';
+import { ObjectID as objectId } from 'mongodb';
+
+const { isSchema, isString, isNumber, isMin } = validators;
+
+const isObjectId = createValidator('isObjectId', value => ({
+  isValid: objectId.isValid(id),
+  value: objectId(value),
+}));
+
+const validate = test(
+  isSchema({
+    name: isString(),
+    age: [isNumber(), isMin(20)],
+    id: isObjectId(),
+  }),
+);
+
+const isValid = validate({
+  name: 'John Doe',
+  age: '22',
+  id: '5bf6cd3e766582a5bf892519',
+});
+
+const { value } = validate;
+
+// In this case `isValid` will be `true` and `value` will be:
+
+{
+  name: 'John Doe',
+  age: 22, // number
+  id: ObjectId('5bf6cd3e766582a5bf892519') // object
+}
+```
+
+Instead of building a validation function like we did above, you can use `validate`:
+
+```js
+import { createValidator, validate, validators } from 'easevalidation';
+import { ObjectID as objectId } from 'mongodb';
+
+const { isSchema, isString, isNumber, isMin } = validators;
+
+try {
+  const value = validate(
+    isSchema({
+      name: isString(),
+      age: [isNumber(), isMin(20)],
+      id: isObjectId(),
+    }),
+  )({
+    name: 'John Doe',
+    age: '22',
+    id: '5bf6cd3e766582a5bf892519',
+  });
+} catch (err) {
+  // won't get here, because it passes validation
+}
+```
