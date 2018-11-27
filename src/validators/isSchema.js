@@ -1,41 +1,60 @@
-import createValidator from '../createValidator';
-import isEveryValidator from './isEvery';
+import difference from 'lodash/difference';
+import validate from '../validate';
 
-const isEvery = createValidator('isEvery', isEveryValidator);
-
-export default (value, schema) => {
+export default (value, schema, options = {}) => {
   if (typeof value !== 'object') {
     return false;
   }
 
-  const errors = Object.keys(schema).reduce((acc, propr) => {
+  const { allowUnknown, updateOriginal } = {
+    allowUnknown: true, // properties missing a validator will be ignored
+    updateOriginal: true, // `value` will be updated by validators instead of returning a new object
+    ...options,
+  };
+
+  if (!allowUnknown) {
+    const props = difference(Object.keys(value), Object.keys(schema));
+    if (props.length) {
+      throw new Error(`Unknown properties: ${props.join(',')}!`);
+    }
+  }
+
+  const errors = {};
+  const obj = {};
+
+  Object.keys(schema).forEach(propr => {
     const validator = schema[propr];
-    let validate;
+    let doValidate;
 
     if (typeof validator.toValidator === 'function') {
-      validate = validator.toValidator();
+      doValidate = validator.toValidator();
     } else if (Array.isArray(validator)) {
-      validate = isEvery(...validator);
+      doValidate = validate(...validator);
     } else {
-      validate = validator;
+      doValidate = validator;
     }
 
     try {
-      Object.assign(value, {
-        [propr]: validate(value[propr]),
-      });
+      obj[propr] = doValidate(value[propr]);
     } catch (err) {
-      Object.assign(acc, {
-        [propr]: err,
-      });
+      errors[propr] = err;
     }
+  });
 
-    return acc;
-  }, {});
+  if (Object.keys(errors).length) {
+    throw errors;
+  }
 
-  if (!Object.keys(errors).length) {
+  if (updateOriginal) {
+    Object.assign(value, obj);
     return true;
   }
 
-  throw errors;
+  return {
+    isValid: true,
+    value: {
+      ...value,
+      ...obj,
+    },
+  };
 };
