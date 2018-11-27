@@ -1,4 +1,4 @@
-import test from '../test';
+import validate from '../validate';
 
 export default (value, itemValidator) => {
   if (!Array.isArray(value)) {
@@ -6,7 +6,10 @@ export default (value, itemValidator) => {
   }
 
   if (itemValidator) {
-    return value.every(item => test(itemValidator)(item));
+    return {
+      isValid: true,
+      value: value.map(item => validate(itemValidator)(item)),
+    };
   }
 
   return true;

@@ -1,16 +1,31 @@
-import { test, validate, validators as v, createValidator, number, string, object } from '../src';
+import { test, validate, validators, createValidator, number, string, object } from '../src';
+
+const {
+  isSchema,
+  isString,
+  isNumber,
+  isLength,
+  isRequired,
+  isMin,
+  isMax,
+  isAlpha,
+  isEqual,
+  isPlainObject,
+  isProperty,
+  isFinite,
+  isEmail,
+} = validators;
 
 const isOdd = createValidator('isOdd', value => value % 2);
 const isEven = createValidator('isEven', value => !test(isOdd())(value));
 
 describe('playground', () => {
-  it('should return error', () => {
-    expect(validate(isOdd())(2)).toBeInstanceOf(Error);
-    expect(validate(isOdd())(2).message).toMatch(/isOdd/);
+  it('should throw error', () => {
+    expect(() => validate(isOdd())(2)).toThrow(/isOdd/);
   });
 
   it('should validate number', () => {
-    expect(test(v.isNumber(), v.isMin(3), v.isMax(5), isEven(), v.isFinite())(4)).toBeTruthy();
+    expect(test(isNumber(), isMin(3), isMax(5), isEven(), isFinite())(4)).toBeTruthy();
   });
 
   it('should validate number using a chained validator', () => {
@@ -26,25 +41,25 @@ describe('playground', () => {
   });
 
   it('validate emails', () => {
-    expect(test(v.isEmail())('zamfir.victor@gmail.com')).toBeTruthy();
+    expect(test(isEmail())('zamfir.victor@gmail.com')).toBeTruthy();
   });
 
   it('should validate object by schema', () => {
     expect(
       test(
-        v.isSchema({
-          firstName: [v.isString(), v.isLength({ min: 3 })],
-          lastName: [v.isString(), v.isLength({ min: 3 })],
-          age: [v.isNumber(), v.isMin(20), v.isMax(22)],
-          location: v.isSchema({
-            address: [v.isString(), v.isLength({ min: 5 })],
-            lat: [v.isRequired(), v.isNumber()],
-            lng: [v.isRequired(), v.isNumber()],
-            something: v.isSchema({
-              bleah: [v.isRequired(), v.isString(), v.isAlpha()],
+        isSchema({
+          firstName: [isString(), isLength({ min: 3 })],
+          lastName: [isString(), isLength({ min: 3 })],
+          age: [isNumber(), isMin(20), isMax(22)],
+          location: isSchema({
+            address: [isString(), isLength({ min: 5 })],
+            lat: [isRequired(), isNumber()],
+            lng: [isRequired(), isNumber()],
+            something: isSchema({
+              bleah: [isRequired(), isString(), isAlpha()],
             }),
           }),
-          password: [v.isString(), v.isEqual('test')],
+          password: [isString(), isEqual('test')],
         }),
       )({
         firstName: 'victor',
@@ -66,23 +81,23 @@ describe('playground', () => {
   it('should validate object by another type of schema', () => {
     expect(
       test(
-        v.isPlainObject(),
-        v.isProperty('firstName', v.isString(), v.isLength({ min: 3 })),
-        v.isProperty('lastName', v.isString(), v.isLength({ min: 3 })),
-        v.isProperty('age', v.isNumber(), v.isMin(20), v.isMax(22)),
-        v.isProperty(
+        isPlainObject(),
+        isProperty('firstName', isString(), isLength({ min: 3 })),
+        isProperty('lastName', isString(), isLength({ min: 3 })),
+        isProperty('age', isNumber(), isMin(20), isMax(22)),
+        isProperty(
           'location',
-          v.isPlainObject(),
-          v.isProperty('address', v.isString(), v.isLength({ min: 5 })),
-          v.isProperty('lat', v.isRequired(), v.isNumber()),
-          v.isProperty('lng', v.isRequired(), v.isNumber()),
-          v.isProperty(
+          isPlainObject(),
+          isProperty('address', isString(), isLength({ min: 5 })),
+          isProperty('lat', isRequired(), isNumber()),
+          isProperty('lng', isRequired(), isNumber()),
+          isProperty(
             'something',
-            v.isPlainObject(),
-            v.isProperty('bleah', v.isRequired(), v.isString(), v.isAlpha()),
+            isPlainObject(),
+            isProperty('bleah', isRequired(), isString(), isAlpha()),
           ),
         ),
-        v.isProperty('password', v.isString(), v.isEqual('test')),
+        isProperty('password', isString(), isEqual('test')),
       )({
         firstName: 'victor',
         lastName: 'zamfir',
@@ -139,7 +154,7 @@ describe('playground', () => {
   });
 
   it('when failing, validate.error should be present', () => {
-    const validateFn = test(v.isNumber(), v.isMin(10), v.isMax(15));
+    const validateFn = test(isNumber(), isMin(10), isMax(15));
     expect(validateFn(9)).toBeFalsy();
     expect(validateFn.error).toBeDefined();
     expect(validateFn.error.message).toMatch(/isMin/);

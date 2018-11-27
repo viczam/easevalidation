@@ -1,7 +1,7 @@
 import createValidator from '../createValidator';
-import isEvery from './isEvery';
+import isEveryValidator from './isEvery';
 
-const everyValidator = createValidator('every', isEvery);
+const isEvery = createValidator('isEvery', isEveryValidator);
 
 export default (value, schema) => {
   if (typeof value !== 'object') {
@@ -15,7 +15,7 @@ export default (value, schema) => {
     if (typeof validator.toValidator === 'function') {
       validate = validator.toValidator();
     } else if (Array.isArray(validator)) {
-      validate = everyValidator(...validator);
+      validate = isEvery(...validator);
     } else {
       validate = validator;
     }

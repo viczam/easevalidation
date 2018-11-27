@@ -83,3 +83,5 @@ const isBetween = createValidator('isBetween', (value, min, max) => min <= value
 
 const isValid = test(isBetween(10, 15))(13); // true
 ```
+
+Validators can also update the value they receive for testing.

@@ -21,19 +21,19 @@ import isNaN from 'lodash/isNaN';
 import isNative from 'lodash/isNative';
 import isNil from 'lodash/isNil';
 import isNull from 'lodash/isNull';
-import isNumber from 'lodash/isNumber';
 import isObjectLike from 'lodash/isObjectLike';
 import isPlainObject from 'lodash/isPlainObject';
 import isRegExp from 'lodash/isRegExp';
 import isSafeInteger from 'lodash/isSafeInteger';
 import isSet from 'lodash/isSet';
-import isString from 'lodash/isString';
 import isSymbol from 'lodash/isSymbol';
 import isTypedArray from 'lodash/isTypedArray';
 import isUndefined from 'lodash/isUndefined';
 import isWeakMap from 'lodash/isWeakMap';
 import isWeakSet from 'lodash/isWeakSet';
 import validatorsJs from 'validator';
+import isString from './isString';
+import isNumber from './isNumber';
 import isAny from './isAny';
 import isEvery from './isEvery';
 import isSchema from './isSchema';
@@ -47,9 +47,9 @@ import isProperty from './isProperty';
 import isPropertyEqual from './isPropertyEqual';
 import isRequired from './isRequired';
 import isValid from './isValid';
-import isValidNumber from './isValidNumber';
 import isCloseTo from './isCloseTo';
 import isInteger from './isInteger';
+import isDefault from './isDefault';
 import createValidators from '../createValidators';
 
 export default createValidators({
@@ -98,12 +98,12 @@ export default createValidators({
   isPropertyEqual,
   isRequired,
   isValid,
-  isValidNumber,
   isCloseTo,
   isObject,
   isSchema,
   isInteger,
   isRegExpMatch: validatorsJs.matches,
+  isDefault,
   ...pick(validatorsJs, [
     'isAlphanumeric',
     'isAlpha',

@@ -11,15 +11,10 @@ class ValidatorStack {
   }
 
   toValidator = (code = this.code) =>
-    createValidator(code, value => {
-      const doValidate = test(this.stack);
-      const isValid = doValidate(value);
-
-      return {
-        isValid,
-        value: doValidate.value,
-      };
-    })();
+    createValidator(code, value => ({
+      isValid: true,
+      value: validate(this.stack)(value),
+    }))();
 
   test = value => {
     const doValidate = test(this.stack);
