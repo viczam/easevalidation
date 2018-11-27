@@ -50,6 +50,10 @@ import isValid from './isValid';
 import isCloseTo from './isCloseTo';
 import isInteger from './isInteger';
 import isDefault from './isDefault';
+import isTruthy from './isTruthy';
+import isFalsy from './isFalsy';
+import isPositive from './isPositive';
+import isNegative from './isNegative';
 import createValidators from '../createValidators';
 
 export default createValidators({
@@ -104,6 +108,10 @@ export default createValidators({
   isInteger,
   isRegExpMatch: validatorsJs.matches,
   isDefault,
+  isTruthy,
+  isFalsy,
+  isPositive,
+  isNegative,
   ...pick(validatorsJs, [
     'isAlphanumeric',
     'isAlpha',

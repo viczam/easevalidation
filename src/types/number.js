@@ -18,6 +18,8 @@ export default (validatorsMap = {}) =>
         'isValid',
         'isOneOf',
         'isInteger',
+        'isPositive',
+        'isNegative',
       ]),
       ...validatorsMap,
     },
