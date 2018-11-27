@@ -54,6 +54,7 @@ import isTruthy from './isTruthy';
 import isFalsy from './isFalsy';
 import isPositive from './isPositive';
 import isNegative from './isNegative';
+import isPrecision from './isPrecision';
 import createValidators from '../createValidators';
 
 export default createValidators({
@@ -112,6 +113,7 @@ export default createValidators({
   isFalsy,
   isPositive,
   isNegative,
+  isPrecision,
   ...pick(validatorsJs, [
     'isAlphanumeric',
     'isAlpha',

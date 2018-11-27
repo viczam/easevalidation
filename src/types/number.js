@@ -20,6 +20,7 @@ export default (validatorsMap = {}) =>
         'isInteger',
         'isPositive',
         'isNegative',
+        'isPrecision',
       ]),
       ...validatorsMap,
     },
