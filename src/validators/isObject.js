@@ -1,8 +1,13 @@
+import isObject from 'lodash/isObject';
 import doPick from 'lodash/pick';
 import doOmit from 'lodash/omit';
 import validate from '../validate';
 
 export default (obj, { min, max, length, validator, pick, omit } = {}) => {
+  if (!isObject(obj)) {
+    return false;
+  }
+
   const properties = Object.keys(obj);
   let value = obj;
 

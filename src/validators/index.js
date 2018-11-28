@@ -1,6 +1,5 @@
 import pick from 'lodash/pick';
 import isArguments from 'lodash/isArguments';
-import isObject from 'lodash/isObject';
 import isArrayBuffer from 'lodash/isArrayBuffer';
 import isArrayLike from 'lodash/isArrayLike';
 import isArrayLikeObject from 'lodash/isArrayLikeObject';
@@ -55,6 +54,7 @@ import isFalsy from './isFalsy';
 import isPositive from './isPositive';
 import isNegative from './isNegative';
 import isPrecision from './isPrecision';
+import isObject from './isObject';
 import createValidators from '../createValidators';
 
 export default createValidators({
