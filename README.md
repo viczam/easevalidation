@@ -92,7 +92,7 @@ import { ObjectID as objectId } from 'mongodb';
 
 const isObjectId = createValidator(
   'isObjectId',
-  value => objectId.isValid(id),
+  value => objectId.isValid(value),
   value => objectId(value),
 );
 
@@ -114,7 +114,7 @@ import { createValidator, test } from 'easevalidation';
 import { ObjectID as objectId } from 'mongodb';
 
 const isObjectId = createValidator('isObjectId', value => ({
-  isValid: objectId.isValid(id),
+  isValid: objectId.isValid(value),
   value: objectId(value),
 }));
 
@@ -130,7 +130,7 @@ import { ObjectID as objectId } from 'mongodb';
 const { isSchema, isString, isNumber, isMin } = validators;
 
 const isObjectId = createValidator('isObjectId', value => ({
-  isValid: objectId.isValid(id),
+  isValid: objectId.isValid(value),
   value: objectId(value),
 }));
 
