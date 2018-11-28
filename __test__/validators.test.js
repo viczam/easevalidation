@@ -10,6 +10,10 @@ const {
   isArray,
   isOneOf,
   isValid,
+  isSchema,
+  isRequired,
+  isString,
+  isMin,
 } = validators;
 
 describe('validators', () => {
@@ -85,5 +89,31 @@ describe('validators', () => {
     expect(test(isValid(() => false))('a')).toBeFalsy();
     expect(test(isValid(val => val))(true)).toBeTruthy();
     expect(test(isValid(val => val))(false)).toBeFalsy();
+  });
+
+  it('isSchema', () => {
+    expect(
+      test(
+        isSchema({
+          name: [isRequired(), isString()],
+          age: [isNumber(), isMin(18)],
+        }),
+      )({
+        name: 'John Doe',
+        age: 20,
+      }),
+    ).toBeTruthy();
+
+    expect(
+      test(
+        isSchema({
+          name: [isRequired(), isString()],
+          age: [isNumber(), isMin(18)],
+        }),
+      )({
+        name: 'John Doe',
+        age: 17,
+      }),
+    ).toBeFalsy();
   });
 });
