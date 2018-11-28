@@ -13,9 +13,10 @@ export default (validatorsMap = {}) =>
         'isEqualWith',
         'isEmpty',
         'isPropertyEqual',
-        'isValid',
         'isOneOf',
       ]),
+      isValid: arg =>
+        typeof arg === 'function' ? validators.isValid(arg) : validators.isObject(arg),
       ...validatorsMap,
     },
     [validators.isObject()],
