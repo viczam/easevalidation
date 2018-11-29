@@ -1,6 +1,12 @@
 import flatten from 'lodash/flatten';
-import { test, validate } from './index';
-import createValidator from './createValidator';
+import {
+  createValidator,
+  createAsyncValidator,
+  test,
+  asyncTest,
+  validate,
+  asyncValidate,
+} from './index';
 
 class ValidatorStack {
   constructor(code, knownValidators = {}, initialValidators = []) {
@@ -16,6 +22,12 @@ class ValidatorStack {
       value: validate(this.stack)(value),
     }))();
 
+  toAsyncValidator = (code = this.code) =>
+    createAsyncValidator(code, async value => ({
+      isValid: true,
+      value: await asyncValidate(this.stack)(value),
+    }))();
+
   test = value => {
     const doValidate = test(this.stack);
     const isValid = doValidate(value);
@@ -23,7 +35,16 @@ class ValidatorStack {
     return isValid;
   };
 
+  asyncTest = async value => {
+    const doValidate = asyncTest(this.stack);
+    const isValid = await doValidate(value);
+    this.error = doValidate.error;
+    return isValid;
+  };
+
   validate = value => validate(this.stack)(value);
+
+  asyncValidate = async value => asyncValidate(this.stack)(value);
 
   extend = knownValidators => {
     Object.assign(
