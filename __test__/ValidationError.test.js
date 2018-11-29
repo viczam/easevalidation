@@ -1,4 +1,4 @@
-import { validate, walkError, validators as v, ValidationError } from '../src';
+import { validate, formatError, validators as v, ValidationError } from '../src';
 
 describe('ValidationError', () => {
   it('when running a simple validator', () => {
@@ -45,7 +45,7 @@ Object {
 }
 `);
 
-      expect(walkError(error)).toMatchInlineSnapshot(`
+      expect(formatError(error)).toMatchInlineSnapshot(`
 Object {
   "age": [ValidationError: Failed passing "isNumber" validator!],
   "location": Object {

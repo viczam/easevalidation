@@ -1,6 +1,6 @@
-const walkError = error => {
+const formatError = error => {
   if (Array.isArray(error)) {
-    return error.map(walkError);
+    return error.map(formatError);
   }
 
   if (!error.code || !error.error) {
@@ -11,7 +11,7 @@ const walkError = error => {
     return Object.keys(error.error).reduce(
       (acc, key) => ({
         ...acc,
-        [key]: walkError(error.error[key]),
+        [key]: formatError(error.error[key]),
       }),
       {},
     );
@@ -20,4 +20,4 @@ const walkError = error => {
   return error;
 };
 
-export default walkError;
+export default formatError;

@@ -3,7 +3,7 @@ import createValidators from './createValidators';
 import test from './test';
 import validate from './validate';
 import ValidationError from './ValidationError';
-import walkError from './walkError';
+import formatError from './formatError';
 import validators from './validators/index';
 
 export {
@@ -12,7 +12,7 @@ export {
   test,
   validate,
   ValidationError,
-  walkError,
+  formatError,
   validators,
 };
 
