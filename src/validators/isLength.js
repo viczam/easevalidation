@@ -1,4 +1,6 @@
-export default (value, length) => {
+import createValidator from '../createValidator';
+
+export default createValidator('isLength', (value, length) => {
   const len = value.length;
 
   if (typeof length === 'object') {
@@ -9,4 +11,4 @@ export default (value, length) => {
   }
 
   return len === length;
-};
+});

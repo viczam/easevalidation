@@ -1,7 +1,8 @@
 import flatten from 'lodash/flatten';
 import validate from '../validate';
+import createValidator from '../createValidator';
 
-export default (value, property, ...validators) => {
+export default createValidator('isProperty', (value, property, ...validators) => {
   if (typeof value[property] === 'undefined') {
     return false;
   }
@@ -11,4 +12,4 @@ export default (value, property, ...validators) => {
   });
 
   return true;
-};
+});

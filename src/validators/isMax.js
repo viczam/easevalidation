@@ -1,2 +1,5 @@
-export default (value, maximum, exclusive = false) =>
-  exclusive ? Number(value) < maximum : Number(value) <= maximum;
+import createValidator from '../createValidator';
+
+export default createValidator('isMax', (value, maximum, exclusive = false) =>
+  exclusive ? Number(value) < maximum : Number(value) <= maximum,
+);

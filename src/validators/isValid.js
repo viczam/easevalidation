@@ -1,1 +1,3 @@
-export default (value, test) => test(value);
+import createValidator from '../createValidator';
+
+export default createValidator('isValid', (value, test) => test(value));

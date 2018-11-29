@@ -1,1 +1,3 @@
-export default value => !value;
+import createValidator from '../createValidator';
+
+export default createValidator('isFalsy', value => !value);

@@ -1,3 +1,4 @@
 import isInteger from 'lodash/isInteger';
+import createValidator from '../createValidator';
 
-export default value => isInteger(Number(value));
+export default createValidator('isInteger', value => isInteger(Number(value)));

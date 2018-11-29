@@ -1,6 +1,7 @@
 import validate from '../validate';
+import createValidator from '../createValidator';
 
-export default (value, ...validators) => {
+export default createValidator('isArray', (value, ...validators) => {
   if (!Array.isArray(value)) {
     return false;
   }
@@ -13,4 +14,4 @@ export default (value, ...validators) => {
   }
 
   return true;
-};
+});

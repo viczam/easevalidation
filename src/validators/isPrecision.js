@@ -1,4 +1,5 @@
 // https://stackoverflow.com/questions/9553354/how-do-i-get-the-decimal-places-of-a-floating-point-number-in-javascript/27865285#27865285
+import createValidator from '../createValidator';
 
 const getPrecision = a => {
   if (!Number.isFinite(a)) return 0;
@@ -14,4 +15,4 @@ const getPrecision = a => {
   return p;
 };
 
-export default (value, nr) => getPrecision(value) === nr;
+export default createValidator('isPrecision', (value, nr) => getPrecision(value) === nr);

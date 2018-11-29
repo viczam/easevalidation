@@ -1,1 +1,3 @@
-export default (value, options) => options.includes(value);
+import createValidator from '../createValidator';
+
+export default createValidator('isOneOf', (value, options) => options.includes(value));
