@@ -13,4 +13,4 @@ const isJSONSchema = test(
   isProperty('properties', isObject()),
 );
 
-export default createValidator('isJSONSchema', value => isJSONSchema(value));
+export default createValidator('isJSONSchema', isJSONSchema);
