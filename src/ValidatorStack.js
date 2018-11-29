@@ -1,6 +1,5 @@
 import flatten from 'lodash/flatten';
-import { test, validate } from './index';
-import createValidator from './createValidator';
+import { test, validate, createValidator } from './index';
 
 class ValidatorStack {
   constructor(code, knownValidators = {}, initialValidators = []) {
