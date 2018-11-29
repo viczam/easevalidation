@@ -7,10 +7,10 @@ import isAny from './isAny';
 import isArray from './isArray';
 import isOneOf from './isOneOf';
 
-export default createValidator('isJSONSchema', value =>
-  test(
-    isObject(),
-    isProperty('type', isAny(isEqual('object'), isArray(isOneOf('object')))),
-    isProperty('properties', isObject()),
-  )(value),
+const isJSONSchema = test(
+  isObject(),
+  isProperty('type', isAny(isEqual('object'), isArray(isOneOf('object')))),
+  isProperty('properties', isObject()),
 );
+
+export default createValidator('isJSONSchema', value => isJSONSchema(value));
