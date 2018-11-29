@@ -1,6 +1,6 @@
 {
   "name": "easevalidation",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "main": "dist/index.js",
   "author": "Victor Zamfir <zamfir.victor@gmail.com>",
   "description": "An easy to use / easy to extend javascript validation library",
