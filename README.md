@@ -3,7 +3,8 @@
 `easevalidation` is an easy to extend javascript validation library that supports multiple types of validators:
 functional validation, schema based, chained validators etc.
 
-It comes bundled with all lodash is\* validators (like isPlainObject, isFinite etc) and all the [validator.js](https://github.com/chriso/validator.js) validators.
+It comes bundled with all lodash is\* validators (like isPlainObject, isFinite etc), all the [validator.js](https://github.com/chriso/validator.js) validators
+and the date-related validators [date-fns](https://date-fns.org/) comes with.
 On top of that, it features some commonly used validators you can find [here](https://github.com/viczam/easevalidation/tree/master/src/validators).
 
 You test the input data using the `test` function:
