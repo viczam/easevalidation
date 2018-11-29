@@ -1,9 +1,11 @@
 class ConfigError extends Error {
-  constructor({ code, error }) {
+  constructor({ code, error, config }) {
     super();
-    this.name = `Invalid configuration for "${code}" validator!`;
+    this.name = this.constructor.name;
+    Error.captureStackTrace(this, this.constructor);
+    this.message = `Invalid configuration for "${code}" validator!`;
     this.error = error;
-    Error.captureStackTrace(this, ConfigError);
+    this.config = config;
   }
 }
 

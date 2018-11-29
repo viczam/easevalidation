@@ -34,7 +34,7 @@ export default (code, validator, setValue, validateConfig) => (...configArgs) =>
     try {
       config = validateConfig(...configArgs);
     } catch (error) {
-      throw new ConfigError({ code, error });
+      throw new ConfigError({ code, error, config: configArgs });
     }
   }
 

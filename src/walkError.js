@@ -7,12 +7,6 @@ const walkError = error => {
     return error;
   }
 
-  if (error.code === 'isProperty') {
-    return {
-      [error.config[0]]: error.error ? walkError(error.error) : error,
-    };
-  }
-
   if (error.code === 'isSchema' && error.error) {
     return Object.keys(error.error).reduce(
       (acc, key) => ({
@@ -21,10 +15,6 @@ const walkError = error => {
       }),
       {},
     );
-  }
-
-  if (error.code === 'isEvery') {
-    return walkError(error.error);
   }
 
   return error;
