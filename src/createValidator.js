@@ -1,4 +1,5 @@
 import ValidationError from './ValidationError';
+import ConfigError from './ConfigError';
 
 const createError = ({ value, code, config, error }) =>
   new ValidationError({
@@ -26,7 +27,17 @@ const toResult = (result, value) => {
   throw new Error(`Invalid validator result: ${result}!`);
 };
 
-export default (code, validator, setValue) => (...config) => {
+export default (code, validator, setValue, validateConfig) => (...configArgs) => {
+  let config = configArgs;
+
+  if (validateConfig && typeof validateConfig === 'function') {
+    try {
+      config = validateConfig(...configArgs);
+    } catch (error) {
+      throw new ConfigError({ code, error });
+    }
+  }
+
   const validate = startValue => {
     try {
       const { isValid, value } = toResult(validator(startValue, ...config), startValue);
