@@ -58,6 +58,7 @@ export default (code, validator, setValue, validateConfig) => (...configArgs) =>
 
   Object.assign(validate, {
     __validation__: {
+      async: true,
       code,
       config,
     },
