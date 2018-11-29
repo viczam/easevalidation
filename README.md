@@ -103,10 +103,13 @@ const isValid = test(isObjectId())('5bf6cd3e766582a5bf892519');
 As you can see, the signature of `createValidator` is:
 
 ```js
-createValidator(String code, Function validate, Function updateValue)
+createValidator(String code, Function validate, [Function updateValue, Function validateConfig])
 ```
 
-Keep in mind that updateValue will run **after** validate function tests the value and **only** if it returns true (`value` passes validation).
+Keep in mind that `updateValue` will run **after** `validate` function tests the value and **only** if it returns true (`value` passes validation).
+
+Only `code` and `validate` are required, the rest of arguments are optional.
+`validateConfig` is a function that can be used to validate the configuration the `validate` function will receive.
 
 Another way to update the value is by returning an object from `validate`:
 
