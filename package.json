@@ -3,7 +3,7 @@
   "version": "0.13.0",
   "main": "dist/index.js",
   "author": "Victor Zamfir <zamfir.victor@gmail.com>",
-  "description": "JAJVL",
+  "description": "An easy to use / easy to extend javascript validation library",
   "license": "MIT",
   "repository": {
     "type": "git",
