@@ -5,7 +5,6 @@ module.exports = {
       {
         targets: {
           node: 'current',
-          browsers: 'ie >= 11',
         },
       },
     ],
