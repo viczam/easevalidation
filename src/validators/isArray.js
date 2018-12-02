@@ -1,5 +1,4 @@
-import validate from '../validate';
-import createValidator from '../createValidator';
+import { createValidator, validate } from '..';
 
 export default createValidator('isArray', (value, ...validators) => {
   if (!Array.isArray(value)) {

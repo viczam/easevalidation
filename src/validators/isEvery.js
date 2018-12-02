@@ -1,5 +1,4 @@
-import createValidator from '../createValidator';
-import validate from '../validate';
+import { createValidator, validate } from '..';
 
 export default createValidator('isEvery', (initialValue, ...validators) => ({
   isValid: true,

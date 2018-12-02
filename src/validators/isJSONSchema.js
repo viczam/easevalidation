@@ -1,5 +1,5 @@
 import test from '../test';
-import createValidator from '../createValidator';
+import { createValidator } from '..';
 import isObject from './isObject';
 import isProperty from './isProperty';
 import isEqual from './isEqual';

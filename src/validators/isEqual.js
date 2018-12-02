@@ -1,4 +1,4 @@
 import isEqual from 'lodash/isEqual';
-import createValidator from '../createValidator';
+import { createValidator } from '..';
 
 export default createValidator('isEqual', isEqual);

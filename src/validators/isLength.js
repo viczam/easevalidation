@@ -1,4 +1,4 @@
-import createValidator from '../createValidator';
+import { createValidator } from '..';
 
 export default createValidator('isLength', (value, length) => {
   const len = value.length;

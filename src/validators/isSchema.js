@@ -1,6 +1,5 @@
 import difference from 'lodash/difference';
-import validate from '../validate';
-import createValidator from '../createValidator';
+import { createValidator, validate } from '..';
 
 export default createValidator('isSchema', (value, schema, options = {}) => {
   if (typeof value !== 'object') {

@@ -1,4 +1,3 @@
-import flatten from 'lodash/flatten';
 import validate from '../validate';
 import createValidator from '../createValidator';
 
@@ -8,7 +7,7 @@ export default createValidator('isProperty', (value, property, ...validators) =>
   }
 
   Object.assign(value, {
-    [property]: validate(...flatten(validators))(value[property]),
+    [property]: validate(...validators)(value[property]),
   });
 
   return true;
