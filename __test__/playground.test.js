@@ -30,9 +30,10 @@ describe('playground', () => {
 
   it('should validate number using a chained validator', () => {
     expect(
-      number({
-        isEven,
-      })
+      number()
+        .extend({
+          isEven,
+        })
         .isMin(3)
         .isMax(5)
         .isEven()

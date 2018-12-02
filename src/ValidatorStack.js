@@ -2,10 +2,9 @@ import flatten from 'lodash/flatten';
 import { test, validate, createValidator } from './index';
 
 class ValidatorStack {
-  constructor(code, knownValidators = {}, initialValidators = []) {
+  constructor(code, initialValidators = []) {
     this.code = code;
     this.stack = initialValidators;
-    this.extend(knownValidators);
     this.error = null;
   }
 

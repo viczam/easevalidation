@@ -65,14 +65,12 @@ describe('validators', () => {
         .test({}),
     ).toBeFalsy();
     expect(
-      object()
-        .isValid({
-          validator: isNumber(),
-        })
-        .test({
-          first: 1,
-          second: 2,
-        }),
+      object({
+        validator: isNumber(),
+      }).test({
+        first: 1,
+        second: 2,
+      }),
     ).toBeTruthy();
   });
 });
