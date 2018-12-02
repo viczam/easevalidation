@@ -25,15 +25,10 @@ export default createValidator('isSchema', (value, schema, options = {}) => {
 
   Object.keys(schema).forEach(propr => {
     const validator = schema[propr];
-    let doValidate;
-
-    if (typeof validator.toValidator === 'function') {
-      doValidate = validator.toValidator();
-    } else if (Array.isArray(validator)) {
-      doValidate = validate(...validator);
-    } else {
-      doValidate = validator;
-    }
+    const doValidate =
+      (typeof validator.toValidator === 'function' && validator.toValidator()) ||
+      (Array.isArray(validator) && validate(...validator)) ||
+      validator;
 
     try {
       obj[propr] = doValidate(value[propr]);
