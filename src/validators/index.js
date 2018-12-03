@@ -56,6 +56,7 @@ import isPrecision from './isPrecision';
 import isObject from './isObject';
 import isEqual from './isEqual';
 import isJSONSchema from './isJSONSchema';
+import isNot from './isNot';
 import createValidators from '../createValidators';
 
 export default {
@@ -167,4 +168,5 @@ export default {
   isValid,
   isEqual,
   isJSONSchema,
+  isNot,
 };
