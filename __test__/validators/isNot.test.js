@@ -1,4 +1,4 @@
-import { validators } from '../../src';
+import { validators, test } from '../../src';
 
 const { isString, isNumber, isEmail, isNot } = validators;
 
@@ -8,5 +8,7 @@ describe('validators', () => {
     expect(() => isNot(isNumber())(3)).toThrow();
     expect(() => isNot(isString(), isEmail())('fsafa')).not.toThrow();
     expect(() => isNot(isString(), isEmail())('john@gmail.com')).toThrow();
+    expect(test(isString(), isNot(isEmail()))('test')).toBeTruthy();
+    expect(test(isString(), isNot(isEmail()))('me@gmail.com')).toBeFalsy();
   });
 });
