@@ -1,3 +1,5 @@
+import formatError from './formatError';
+
 class ValidationError extends Error {
   constructor({ value, code, config, error, message }) {
     super();
@@ -12,6 +14,10 @@ class ValidationError extends Error {
     this.code = code;
     this.config = config;
     this.error = error;
+  }
+
+  toJSON() {
+    return formatError(this);
   }
 }
 
