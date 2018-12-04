@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import pick from 'lodash/pick';
+import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import ValidationError from './ValidationError';
 
@@ -25,16 +26,16 @@ const formatConfig = config => {
   return config.__validation__;
 };
 
-const formatError = error => {
+const formatError = (error, short = false) => {
   if (Array.isArray(error)) {
-    return error.map(formatError);
+    return error.map(err => formatError(err, short));
   }
 
   if (isPlainObject(error)) {
     return Object.keys(error).reduce(
       (acc, key) => ({
         ...acc,
-        [key]: formatError(error[key]),
+        [key]: formatError(error[key], short),
       }),
       {},
     );
@@ -44,11 +45,13 @@ const formatError = error => {
     return error;
   }
 
-  return {
+  const result = {
     ...pick(error, ['code', 'value']),
     config: formatConfig(error.config),
-    error: error.error && formatError(error.error),
+    error: error.error && formatError(error.error, short),
   };
+
+  return short ? omit(result, ['value', 'config']) : result;
 };
 
 export default formatError;
