@@ -1,14 +1,6 @@
 import ValidationError from './ValidationError';
 import ConfigError from './ConfigError';
 
-const createError = ({ value, code, config, error }) =>
-  new ValidationError({
-    value,
-    code,
-    config,
-    error,
-  });
-
 const toResult = (result, value) => {
   if (typeof result === 'boolean') {
     return {
@@ -30,7 +22,7 @@ const toResult = (result, value) => {
 export default (code, validator, setValue, validateConfig) => (...configArgs) => {
   let config = configArgs;
 
-  if (validateConfig && typeof validateConfig === 'function') {
+  if (typeof validateConfig === 'function') {
     try {
       config = validateConfig(...configArgs);
     } catch (error) {
@@ -39,21 +31,30 @@ export default (code, validator, setValue, validateConfig) => (...configArgs) =>
   }
 
   const validate = startValue => {
+    let result;
+
     try {
-      const { isValid, value } = toResult(validator(startValue, ...config), startValue);
-
-      if (!isValid) {
-        throw createError({ value: startValue, code, config });
-      }
-
-      return typeof setValue === 'function' ? setValue(value, ...config) : value;
+      result = toResult(validator(startValue, ...config), startValue);
     } catch (error) {
-      if (!(error instanceof ValidationError)) {
-        throw createError({ value: startValue, code, config, error });
-      }
-
-      throw error;
+      throw new ValidationError({
+        value: startValue,
+        code,
+        config,
+        error,
+      });
     }
+
+    const { isValid, value } = result;
+
+    if (!isValid) {
+      throw new ValidationError({
+        value: startValue,
+        code,
+        config,
+      });
+    }
+
+    return typeof setValue === 'function' ? setValue(value, ...config) : value;
   };
 
   Object.assign(validate, {
