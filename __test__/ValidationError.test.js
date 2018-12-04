@@ -29,7 +29,9 @@ describe('ValidationError', () => {
         }),
       )({
         age: 'fsafa',
-        location: {},
+        location: {
+          lat: 'abc',
+        },
       });
       expect(false).toBeTruthy();
     } catch (error) {
@@ -47,12 +49,110 @@ Object {
 
       expect(formatError(error)).toMatchInlineSnapshot(`
 Object {
-  "age": [ValidationError: Failed passing "isNumber" validator!],
-  "location": Object {
-    "lat": [ValidationError: Failed passing "isRequired" validator!],
-    "lng": [ValidationError: Failed passing "isRequired" validator!],
+  "code": "isSchema",
+  "config": Array [
+    Object {
+      "age": Array [
+        Object {
+          "code": "isRequired",
+          "config": Array [],
+        },
+        Object {
+          "code": "isNumber",
+          "config": Array [],
+        },
+      ],
+      "location": Object {
+        "code": "isSchema",
+        "config": Array [
+          Object {
+            "lat": Array [
+              [Function],
+              [Function],
+            ],
+            "lng": Array [
+              [Function],
+              [Function],
+            ],
+          },
+        ],
+      },
+      "name": Array [
+        Object {
+          "code": "isRequired",
+          "config": Array [],
+        },
+        Object {
+          "code": "isString",
+          "config": Array [],
+        },
+      ],
+    },
+  ],
+  "error": Object {
+    "age": Object {
+      "code": "isNumber",
+      "config": Array [],
+      "error": undefined,
+      "value": "fsafa",
+    },
+    "location": Object {
+      "code": "isSchema",
+      "config": Array [
+        Object {
+          "lat": Array [
+            Object {
+              "code": "isRequired",
+              "config": Array [],
+            },
+            Object {
+              "code": "isNumber",
+              "config": Array [],
+            },
+          ],
+          "lng": Array [
+            Object {
+              "code": "isRequired",
+              "config": Array [],
+            },
+            Object {
+              "code": "isNumber",
+              "config": Array [],
+            },
+          ],
+        },
+      ],
+      "error": Object {
+        "lat": Object {
+          "code": "isNumber",
+          "config": Array [],
+          "error": undefined,
+          "value": "abc",
+        },
+        "lng": Object {
+          "code": "isRequired",
+          "config": Array [],
+          "error": undefined,
+          "value": undefined,
+        },
+      },
+      "value": Object {
+        "lat": "abc",
+      },
+    },
+    "name": Object {
+      "code": "isRequired",
+      "config": Array [],
+      "error": undefined,
+      "value": undefined,
+    },
   },
-  "name": [ValidationError: Failed passing "isRequired" validator!],
+  "value": Object {
+    "age": "fsafa",
+    "location": Object {
+      "lat": "abc",
+    },
+  },
 }
 `);
     }
