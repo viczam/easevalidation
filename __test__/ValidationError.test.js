@@ -155,6 +155,35 @@ Object {
   },
 }
 `);
+
+      expect(formatError(error, true)).toMatchInlineSnapshot(`
+Object {
+  "code": "isSchema",
+  "error": Object {
+    "age": Object {
+      "code": "isNumber",
+      "error": undefined,
+    },
+    "location": Object {
+      "code": "isSchema",
+      "error": Object {
+        "lat": Object {
+          "code": "isNumber",
+          "error": undefined,
+        },
+        "lng": Object {
+          "code": "isRequired",
+          "error": undefined,
+        },
+      },
+    },
+    "name": Object {
+      "code": "isRequired",
+      "error": undefined,
+    },
+  },
+}
+`);
     }
   });
 });
