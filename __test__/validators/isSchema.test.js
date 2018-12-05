@@ -1,6 +1,6 @@
-import { validators, test } from '../../src';
+import { validators, test, validate } from '../../src';
 
-const { isSchema, isNumber, isRequired, isString, isMin } = validators;
+const { isSchema, isNumber, isRequired, isString, isMin, isAny, isUndefined } = validators;
 
 describe('validators', () => {
   it('isSchema', () => {
@@ -27,5 +27,13 @@ describe('validators', () => {
         age: 17,
       }),
     ).toBeFalsy();
+
+    expect(
+      validate(
+        isSchema({
+          name: isAny(isUndefined(), isString()),
+        }),
+      )({}),
+    ).toMatchInlineSnapshot(`Object {}`);
   });
 });

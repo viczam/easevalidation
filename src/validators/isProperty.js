@@ -2,13 +2,13 @@ import validate from '../validate';
 import createValidator from '../createValidator';
 
 export default createValidator('isProperty', (value, property, ...validators) => {
-  if (typeof value[property] === 'undefined') {
-    return false;
-  }
+  const val = validate(...validators)(value[property]);
 
-  Object.assign(value, {
-    [property]: validate(...validators)(value[property]),
-  });
+  if (typeof val !== 'undefined') {
+    Object.assign(value, {
+      [property]: val,
+    });
+  }
 
   return true;
 });

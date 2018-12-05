@@ -20,9 +20,7 @@ export default createValidator('isSchema', (value, schema, options = {}) => {
   }
 
   const errors = {};
-  const obj = {};
-
-  Object.keys(schema).forEach(propr => {
+  const validatedValue = Object.keys(schema).reduce((acc, propr) => {
     const validator = schema[propr];
     const doValidate =
       (typeof validator.toValidator === 'function' && validator.toValidator()) ||
@@ -30,18 +28,23 @@ export default createValidator('isSchema', (value, schema, options = {}) => {
       validator;
 
     try {
-      obj[propr] = doValidate(value[propr]);
+      const val = doValidate(value[propr]);
+      if (typeof val !== 'undefined') {
+        acc[propr] = val;
+      }
     } catch (err) {
       errors[propr] = err;
     }
-  });
+
+    return acc;
+  }, {});
 
   if (Object.keys(errors).length) {
     throw errors;
   }
 
   if (updateOriginal) {
-    Object.assign(value, obj);
+    Object.assign(value, validatedValue);
     return true;
   }
 
@@ -49,7 +52,7 @@ export default createValidator('isSchema', (value, schema, options = {}) => {
     isValid: true,
     value: {
       ...value,
-      ...obj,
+      ...validatedValue,
     },
   };
 });
