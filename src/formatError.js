@@ -20,7 +20,12 @@ export const formatConfig = config => {
     return config;
   }
 
-  return config.__validation__;
+  const { __validation__ } = config;
+
+  return {
+    code: __validation__.code,
+    ...(__validation__.config.length ? { config: __validation__.config } : {}),
+  };
 };
 
 const formatError = (
