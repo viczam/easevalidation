@@ -1,9 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import pick from 'lodash/pick';
-import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 
-const formatConfig = config => {
+export const formatConfig = config => {
   if (Array.isArray(config)) {
     return config.map(formatConfig);
   }
@@ -25,16 +23,23 @@ const formatConfig = config => {
   return config.__validation__;
 };
 
-const formatError = (error, short = false) => {
+const formatError = (
+  error,
+  formatter = err => ({
+    code: err.code,
+    config: formatConfig(err.config),
+    error: err.error && formatError(err.error, formatter),
+  }),
+) => {
   if (Array.isArray(error)) {
-    return error.map(err => formatError(err, short));
+    return error.map(err => formatError(err, formatter));
   }
 
   if (isPlainObject(error)) {
     return Object.keys(error).reduce(
       (acc, key) => ({
         ...acc,
-        [key]: formatError(error[key], short),
+        [key]: formatError(error[key], formatter),
       }),
       {},
     );
@@ -44,13 +49,7 @@ const formatError = (error, short = false) => {
     return error;
   }
 
-  const result = {
-    ...pick(error, ['code', 'value']),
-    config: formatConfig(error.config),
-    error: error.error && formatError(error.error, short),
-  };
-
-  return short ? omit(result, ['value', 'config']) : result;
+  return formatter(error, formatter);
 };
 
 export default formatError;

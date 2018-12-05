@@ -94,7 +94,6 @@ Object {
       "code": "isNumber",
       "config": Array [],
       "error": undefined,
-      "value": "fsafa",
     },
     "location": Object {
       "code": "isSchema",
@@ -127,58 +126,113 @@ Object {
           "code": "isNumber",
           "config": Array [],
           "error": undefined,
-          "value": "abc",
         },
         "lng": Object {
           "code": "isRequired",
           "config": Array [],
           "error": undefined,
-          "value": undefined,
         },
-      },
-      "value": Object {
-        "lat": "abc",
       },
     },
     "name": Object {
       "code": "isRequired",
       "config": Array [],
       "error": undefined,
-      "value": undefined,
-    },
-  },
-  "value": Object {
-    "age": "fsafa",
-    "location": Object {
-      "lat": "abc",
     },
   },
 }
 `);
 
-      expect(formatError(error, true)).toMatchInlineSnapshot(`
+      expect(formatError(error)).toMatchInlineSnapshot(`
 Object {
   "code": "isSchema",
+  "config": Array [
+    Object {
+      "age": Array [
+        Object {
+          "code": "isRequired",
+          "config": Array [],
+        },
+        Object {
+          "code": "isNumber",
+          "config": Array [],
+        },
+      ],
+      "location": Object {
+        "code": "isSchema",
+        "config": Array [
+          Object {
+            "lat": Array [
+              [Function],
+              [Function],
+            ],
+            "lng": Array [
+              [Function],
+              [Function],
+            ],
+          },
+        ],
+      },
+      "name": Array [
+        Object {
+          "code": "isRequired",
+          "config": Array [],
+        },
+        Object {
+          "code": "isString",
+          "config": Array [],
+        },
+      ],
+    },
+  ],
   "error": Object {
     "age": Object {
       "code": "isNumber",
+      "config": Array [],
       "error": undefined,
     },
     "location": Object {
       "code": "isSchema",
+      "config": Array [
+        Object {
+          "lat": Array [
+            Object {
+              "code": "isRequired",
+              "config": Array [],
+            },
+            Object {
+              "code": "isNumber",
+              "config": Array [],
+            },
+          ],
+          "lng": Array [
+            Object {
+              "code": "isRequired",
+              "config": Array [],
+            },
+            Object {
+              "code": "isNumber",
+              "config": Array [],
+            },
+          ],
+        },
+      ],
       "error": Object {
         "lat": Object {
           "code": "isNumber",
+          "config": Array [],
           "error": undefined,
         },
         "lng": Object {
           "code": "isRequired",
+          "config": Array [],
           "error": undefined,
         },
       },
     },
     "name": Object {
       "code": "isRequired",
+      "config": Array [],
       "error": undefined,
     },
   },
