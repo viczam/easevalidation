@@ -25,11 +25,21 @@ export const formatConfig = config => {
 
 const formatError = (
   error,
-  formatter = err => ({
-    code: err.code,
-    config: formatConfig(err.config),
-    error: err.error && formatError(err.error, formatter),
-  }),
+  formatter = err => {
+    const result = {
+      code: err.code,
+    };
+
+    if (err.config.length) {
+      result.config = formatConfig(err.config);
+    }
+
+    if (err.error) {
+      result.error = err.error && formatError(err.error, formatter);
+    }
+
+    return result;
+  },
 ) => {
   if (Array.isArray(error)) {
     return error.map(err => formatError(err, formatter));
