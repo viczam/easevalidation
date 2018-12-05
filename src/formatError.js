@@ -2,7 +2,6 @@
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
-import ValidationError from './ValidationError';
 
 const formatConfig = config => {
   if (Array.isArray(config)) {
@@ -41,7 +40,7 @@ const formatError = (error, short = false) => {
     );
   }
 
-  if (!(error instanceof ValidationError)) {
+  if (!error.code) {
     return error;
   }
 
