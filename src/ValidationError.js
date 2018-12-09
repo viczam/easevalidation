@@ -19,6 +19,10 @@ class ValidationError extends Error {
   toJSON() {
     return formatError(this);
   }
+
+  inspect() {
+    return `${this.stack}\n${JSON.stringify(this.toJSON(), null, 2)}`;
+  }
 }
 
 export default ValidationError;
