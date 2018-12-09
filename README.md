@@ -1,5 +1,11 @@
 # easevalidation
 
+### Install
+
+```
+npm install easevalidation
+```
+
 `easevalidation` is an easy to extend javascript validation library that supports multiple types of validators:
 functional validation, schema based, chained validators etc.
 
