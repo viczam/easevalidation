@@ -20,12 +20,8 @@ class ValidationError extends Error {
     return formatError(this);
   }
 
-  toString() {
-    return `${this.stack}\n${JSON.stringify(this.toJSON(), null, 2)}`;
-  }
-
   inspect() {
-    return this.toString();
+    return JSON.stringify(this.toJSON(), null, 2);
   }
 }
 

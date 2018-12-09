@@ -24,7 +24,7 @@ export const formatConfig = config => {
 
   return {
     code: __validation__.code,
-    ...(__validation__.config.length ? { config: __validation__.config } : {}),
+    ...(__validation__.config.length ? { config: formatConfig(__validation__.config) } : {}),
   };
 };
 

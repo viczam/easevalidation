@@ -72,5 +72,90 @@ Object {
 }
 `);
     }
+
+    try {
+      validate(
+        v.isAny(
+          v.isString(),
+          v.isEvery(
+            v.isSchema({
+              before: v.isAny(v.isString(), v.isUndefined()),
+              after: v.isAny(v.isString(), v.isUndefined()),
+            }),
+            v.isObject({
+              length: 1,
+              validator: v.isEvery(v.isRequired(), v.isString()),
+            }),
+          ),
+        ),
+      )({
+        before: 'bfr',
+        after: 'aftr',
+      });
+    } catch (error) {
+      expect(formatError(error)).toMatchInlineSnapshot(`
+Object {
+  "code": "isAny",
+  "config": Array [
+    Object {
+      "code": "isString",
+    },
+    Object {
+      "code": "isEvery",
+      "config": Array [
+        Object {
+          "code": "isSchema",
+          "config": Array [
+            Object {
+              "after": Object {
+                "code": "isAny",
+                "config": Array [
+                  Object {
+                    "code": "isString",
+                  },
+                  Object {
+                    "code": "isUndefined",
+                  },
+                ],
+              },
+              "before": Object {
+                "code": "isAny",
+                "config": Array [
+                  Object {
+                    "code": "isString",
+                  },
+                  Object {
+                    "code": "isUndefined",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        Object {
+          "code": "isObject",
+          "config": Array [
+            Object {
+              "length": 1,
+              "validator": Object {
+                "code": "isEvery",
+                "config": Array [
+                  Object {
+                    "code": "isRequired",
+                  },
+                  Object {
+                    "code": "isString",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
+`);
+    }
   });
 });
