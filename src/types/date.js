@@ -60,4 +60,5 @@ export default (...args) =>
     }),
     isValid: validators.isValid,
     isOneOf: validators.isOneOf,
+    isTernary: validators.isTernary,
   });

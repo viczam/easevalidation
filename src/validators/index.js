@@ -57,6 +57,8 @@ import isObject from './isObject';
 import isEqual from './isEqual';
 import isJSONSchema from './isJSONSchema';
 import isNot from './isNot';
+import isTernary from './isTernary';
+import isPropertyPath from './isPropertyPath';
 import createValidators from '../createValidators';
 
 export default {
@@ -169,4 +171,6 @@ export default {
   isEqual,
   isJSONSchema,
   isNot,
+  isTernary,
+  isPropertyPath,
 };

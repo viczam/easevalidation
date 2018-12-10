@@ -50,5 +50,6 @@ export default (...args) =>
       'isInteger',
       'isRegExpMatch',
       'isMongoId',
+      'isTernary',
     ]),
   );

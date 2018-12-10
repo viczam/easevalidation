@@ -7,11 +7,13 @@ export default (...args) =>
     pick(validators, [
       'isSchema',
       'isProperty',
+      'isPropertyPath',
       'isEqual',
       'isEqualWith',
       'isEmpty',
       'isPropertyEqual',
       'isOneOf',
       'isValid',
+      'isTernary',
     ]),
   );

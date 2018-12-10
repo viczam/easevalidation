@@ -19,5 +19,6 @@ export default (...args) =>
       'isPositive',
       'isNegative',
       'isPrecision',
+      'isTernary',
     ]),
   );
