@@ -18,6 +18,13 @@ describe('validators', () => {
       }),
     ).toBeTruthy();
 
+    expect(
+      test(isJSONSchema())({
+        type: ['objects'],
+        properties: {},
+      }),
+    ).toBeFalsy();
+
     expect(test(isJSONSchema())({})).toBeFalsy();
   });
 });
