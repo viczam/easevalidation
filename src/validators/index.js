@@ -37,7 +37,7 @@ import isAny from './isAny';
 import isEvery from './isEvery';
 import isSchema from './isSchema';
 import isArray from './isArray';
-import isArrayElement from './isArrayElement';
+import isArrayElementAt from './isArrayElementAt';
 import isInstanceOf from './isInstanceOf';
 import isMax from './isMax';
 import isLength from './isLength';
@@ -148,7 +148,7 @@ export default {
   }),
   isAny,
   isArray,
-  isArrayElement,
+  isArrayElementAt,
   isCloseTo,
   isDefault,
   isEvery,
