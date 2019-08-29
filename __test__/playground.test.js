@@ -1,4 +1,4 @@
-import { test, validate, validators, createValidator, number, string, object } from '../src';
+import { test, validate, validators, createValidator } from '../src';
 
 const {
   isSchema,
@@ -26,19 +26,6 @@ describe('playground', () => {
 
   it('should validate number', () => {
     expect(test(isNumber(), isMin(3), isMax(5), isEven(), isFinite())(4)).toBeTruthy();
-  });
-
-  it('should validate number using a chained validator', () => {
-    expect(
-      number()
-        .extend({
-          isEven,
-        })
-        .isMin(3)
-        .isMax(5)
-        .isEven()
-        .isFinite(),
-    ).toBeTruthy();
   });
 
   it('validate emails', () => {
@@ -99,44 +86,6 @@ describe('playground', () => {
           ),
         ),
         isProperty('password', isString(), isEqual('test')),
-      )({
-        firstName: 'victor',
-        lastName: 'zamfir',
-        age: 21,
-        location: {
-          address: 'this is my address',
-          lat: 10,
-          lng: 100,
-          something: {
-            bleah: 'fsafa',
-          },
-        },
-        password: 'test',
-      }),
-    ).toBeTruthy();
-  });
-
-  it('should validate object by schema built with chained validators', () => {
-    expect(
-      test(
-        object().isSchema({
-          firstName: string().isLength({ min: 3 }),
-          lastName: string().isLength({ min: 3 }),
-          age: number()
-            .isMin(20)
-            .isMax(22),
-          location: object().isSchema({
-            address: string().isLength({ min: 5 }),
-            lat: number().isMin(0),
-            lng: number().isMin(0),
-            something: object().isSchema({
-              bleah: string()
-                .isRequired()
-                .isAlpha(),
-            }),
-          }),
-          password: string().isEqual('test'),
-        }),
       )({
         firstName: 'victor',
         lastName: 'zamfir',

@@ -1,27 +1,10 @@
-import { createValidator, test, validators, number } from '../src';
+import { createValidator, test, validators } from '../src';
 
 const { isNumber, isMin, isMax } = validators;
 
 describe('docs', () => {
   it('example 1', () => {
     expect(test(isNumber(), isMin(10), isMax(15))(13)).toBeTruthy();
-  });
-
-  it('example 2', () => {
-    expect(
-      test(
-        number()
-          .isMin(10)
-          .isMax(15),
-      )(13),
-    ).toBeTruthy();
-
-    expect(
-      number()
-        .isMin(10)
-        .isMax(15)
-        .test(13),
-    ).toBeTruthy();
   });
 
   it('example 3', () => {

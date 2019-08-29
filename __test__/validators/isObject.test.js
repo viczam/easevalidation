@@ -1,4 +1,4 @@
-import { validators, validate, test, object } from '../../src';
+import { validators, validate, test } from '../../src';
 
 const { isNumber, isString, isObject } = validators;
 
@@ -56,21 +56,5 @@ describe('validators', () => {
       p2: 2,
       p3: 3,
     });
-  });
-
-  it('object type', () => {
-    expect(
-      object()
-        .isValid(() => false)
-        .test({}),
-    ).toBeFalsy();
-    expect(
-      object({
-        validator: isNumber(),
-      }).test({
-        first: 1,
-        second: 2,
-      }),
-    ).toBeTruthy();
   });
 });

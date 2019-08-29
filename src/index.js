@@ -17,5 +17,3 @@ export {
   formatError,
   validators,
 };
-
-export * from './types';
