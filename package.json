@@ -17,31 +17,31 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "date-fns": "2.0.1",
+    "date-fns": "2.9.0",
     "lodash": "4.17.15",
-    "validator": "11.1.0"
+    "validator": "12.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "7.5.5",
-    "@babel/node": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "7.5.5",
-    "@babel/preset-env": "7.5.5",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "7.8.3",
+    "@babel/preset-env": "7.8.4",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.3",
-    "babel-jest": "24.9.0",
-    "eslint": "6.2.2",
+    "babel-jest": "25.1.0",
+    "eslint": "6.8.0",
     "eslint-config-airbnb-base": "14.0.0",
-    "eslint-config-prettier": "6.1.0",
-    "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-jest": "22.15.2",
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-import": "2.20.1",
+    "eslint-plugin-jest": "23.7.0",
     "eslint-plugin-jsx-a11y": "6.2.3",
-    "eslint-plugin-prettier": "3.1.0",
-    "eslint-plugin-react": "7.14.3",
-    "husky": "3.0.4",
-    "jest": "24.9.0",
-    "lint-staged": "9.2.5",
-    "prettier": "1.18.2"
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-react": "7.18.3",
+    "husky": "4.2.3",
+    "jest": "25.1.0",
+    "lint-staged": "10.0.7",
+    "prettier": "1.19.1"
   },
   "renovate": {
     "extends": [
