@@ -1,9 +1,10 @@
 import flatten from 'lodash/flatten';
-import { validate, createValidator } from '..';
+import createValidator from '../createValidator';
+import validate from '../validate';
 
 export default createValidator('isAny', (value, ...validators) => {
   let finalValue;
-  const isValid = flatten(validators).some(validator => {
+  const isValid = flatten(validators).some((validator) => {
     try {
       finalValue = validate(validator)(value);
       return true;

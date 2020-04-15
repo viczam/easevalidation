@@ -1,7 +1,8 @@
 import isObject from 'lodash/isObject';
 import doPick from 'lodash/pick';
 import doOmit from 'lodash/omit';
-import { createValidator, validate } from '..';
+import createValidator from '../createValidator';
+import validate from '../validate';
 
 export default createValidator(
   'isObject',

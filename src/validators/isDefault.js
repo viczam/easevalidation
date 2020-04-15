@@ -1,4 +1,4 @@
-import { createValidator } from '..';
+import createValidator from '../createValidator';
 
 export default createValidator('isDefault', (value, defaultValue) => ({
   isValid: true,

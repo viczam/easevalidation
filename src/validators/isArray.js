@@ -1,4 +1,5 @@
-import { createValidator, validate } from '..';
+import createValidator from '../createValidator';
+import validate from '../validate';
 
 export default createValidator('isArray', (value, ...validators) => {
   if (!Array.isArray(value)) {
@@ -8,7 +9,7 @@ export default createValidator('isArray', (value, ...validators) => {
   if (validators.length) {
     return {
       isValid: true,
-      value: value.map(item => validate(...validators)(item)),
+      value: value.map((item) => validate(...validators)(item)),
     };
   }
 
